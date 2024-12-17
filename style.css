@@ -36,7 +36,12 @@ body {
     background-color: #fff;
     color: black;
 }
-
+.nav-button.active:hover{
+    background-color: #4a00e0;
+}
+.nav-button:hover{
+    background-color:#4a00e0;
+}
 /* Main Content */
 .container {
     margin-top: 50px;
