@@ -39,8 +39,21 @@ body {
 .nav-button.active:hover{
     background-color: #4a00e0;
 }
+.nav-button.active:hover:active{
+    background-color: white;
+}
+
 .nav-button:hover{
     background-color:#4a00e0;
+}
+.nav-button:hover:active{
+    background-color:black;
+}
+.action-button:hover{
+    background-color:#8e2de2;
+}
+.action-button:hover:active{
+    background-color: black;
 }
 /* Main Content */
 .container {
