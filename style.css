@@ -32,10 +32,12 @@ body {
     font-weight: bold;
 }
 
+
 .nav-links .nav-button.active {
     background-color: #fff;
     color: black;
 }
+
 .nav-button.active:hover{
     background-color: #4a00e0;
 }
@@ -55,7 +57,6 @@ body {
 .action-button:hover:active{
     background-color: black;
 }
-/* Main Content */
 .container {
     margin-top: 50px;
 }
@@ -85,7 +86,7 @@ body {
 
 /* Footer */
 footer {
-    margin-top: 50px;
+    margin-top: 350px;
     padding: 10px;
     background-color: #ddd;
     font-size: 14px;
