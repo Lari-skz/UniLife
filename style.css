@@ -1,5 +1,5 @@
 /* General Reset */
-* {
+*{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -47,6 +47,15 @@ body {
     color: white;
    text-decoration:none;
    
+
+}
+.text-decoration-login{
+    color: white;
+    text-decoration:none;
+}
+.text-decoration-signin{
+    color: white;
+    text-decoration:none;
 }
 .nav-button.active:hover{
     background-color: #4a00e0;
