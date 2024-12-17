@@ -3,35 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About - UniLife</title>
+<link rel="icon" type="image/png" sizes="32x32" href="favicon_uni.png">
+    <title>UniLife</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">UniLife</a>
-            <div class="collapse navbar-collapse justify-content-end">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="btn btn-outline-light mx-1" href="index.html">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="btn btn-outline-light mx-1 active" href="about.html">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <button class="btn btn-primary mx-1">Login</button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="btn btn-success mx-1">Sign-In</button>
-                    </li>
-                </ul>
-            </div>
+    <div class="navbar">
+        <div class="nav-links">
+            <button class="nav-button active">Home</button>
+            <button class="nav-button">
+                <a href="about.html" class="text-decoration-none">About</a>
+            </button>
         </div>
-    </nav>
+        <div class="nav-actions">
+            <button class="action-button">Login</button>
+            <button class="action-button">Sign-In</button>
+        </div>
+    </div>
 
-    <!-- About Content -->
-    <div class="container text-center my-5">
+    <!-- Main Content -->
+   <div class="container text-center my-5">
         <h1 class="display-4 fw-bold text-primary">Echipa StudInfo3</h1>
         <p class="lead text-secondary">Membrii Echipei</p>
 
@@ -59,19 +51,16 @@
             </div>
         </div>
     </div>
-
-    <!-- Footer -->
-    <footer class="bg-light text-center py-4">
-        <div class="container">
-            <p class="mb-0">
-                Follow us on Instagram: 
-                <a href="https://instagram.com/unilife_studinfo3" target="_blank" class="fw-bold text-decoration-none text-primary">@unilife_studinfo3</a>
-            </p>
-        </div>
+    <!-- Footnote -->
+    <footer>
+        
+        <p>Follow us on Instagram: 
+            <a href="https://instagram.com/unilife_studinfo3" target="_blank">@unilife_studinfo3</a>
+        </p>
     </footer>
 
-    <!-- Scripts -->
-    <script src="script.js"></script>
+    <!-- Script -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+   
 </body>
 </html>
-
