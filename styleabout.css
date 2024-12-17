@@ -1,0 +1,129 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f8f8f8;
+    text-align: center;
+}
+
+/* Navigation Bar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background: linear-gradient(to right, #4a00e0, #8e2de2);
+}
+
+.nav-links .nav-button,
+.nav-actions .action-button {
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    margin: 0 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+
+.nav-links .nav-button.active {
+    background-color: #fff;
+    color: black;
+}
+.text-decoration-home{ 
+    color: black;
+   text-decoration:none;
+   
+
+}
+.text-decoration-about{ 
+    color: white;
+   text-decoration:none;
+   
+
+}
+.nav-button.active:hover{
+    background-color: #4a00e0;
+}
+.nav-button.active:hover:active{
+    background-color: white;
+}
+
+.nav-button:hover{
+    background-color:#4a00e0;
+}
+.nav-button:hover:active{
+    background-color:black;
+}
+.action-button:hover{
+    background-color:#8e2de2;
+}
+.action-button:hover:active{
+    background-color: black;
+}
+
+
+.container {
+    text-align: center; 
+    margin: 20px auto;
+}
+
+/* Header Styles */
+.display-4 {
+    font-size: 3rem;
+    color: #6b21a8;
+    font-weight: bold;
+}
+
+.membri-echipei {
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    color: #333;
+}
+
+/* Flexbox for team members */
+.coloane-membri {
+    display: flex; 
+    justify-content: center; 
+    align-items: flex-start; 
+    gap: 2rem; 
+    flex-wrap: wrap; 
+}
+
+/* Individual Member Styling */
+.pozele {
+    text-align: center; 
+}
+.photoleader{
+   
+    border-radius: 50%; 
+    object-fit: cover; 
+    border:transparent;
+    
+
+
+}
+.photo {
+    border-radius: 50%; 
+    object-fit: cover; 
+    border:transparent;
+}
+
+.nume {
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #000;
+}
+
+.leader {
+    font-size: 1rem;
+    color: #555;
+    font-weight: 600;
+}
