@@ -1,0 +1,115 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f8f8f8;
+    text-align: center;
+}
+
+/* Navigation Bar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background: linear-gradient(to right, #4a00e0, #8e2de2);
+}
+
+.nav-links .nav-button,
+.nav-actions .action-button {
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    margin: 0 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+
+.nav-links .nav-button.active {
+    background-color: #fff;
+    color: black;
+}
+.text-decoration-home{ 
+    color: black;
+   text-decoration:none;
+   
+
+}
+.text-decoration-about{ 
+    color: white;
+   text-decoration:none;
+   
+
+}
+.text-decoration-login{
+    color: white;
+    text-decoration:none;
+}
+.text-decoration-signin{
+    color: white;
+    text-decoration:none;
+}
+.nav-button.active:hover{
+    background-color: #4a00e0;
+}
+.nav-button.active:hover:active{
+    background-color: white;
+}
+
+.nav-button:hover{
+    background-color:#4a00e0;
+}
+.nav-button:hover:active{
+    background-color:black;
+}
+.action-button:hover{
+    background-color:#8e2de2;
+}
+.action-button:hover:active{
+    background-color: black;
+}
+
+
+
+
+
+body {
+    background-color: #f3f3f3;
+}
+.gradient-box {
+    background: linear-gradient(to right, #0047ab, #b04fb6);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.form-control {
+    border-radius: 30px;
+    margin-bottom: 20px;
+}
+.btn-custom {
+    border-radius: 20px;
+    padding: 10px 20px;
+    background-color: #fff;
+    color: #333;
+    font-weight: bold;
+    border: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+.btn-custom:hover {
+    background-color: #eee;
+}
+.link-custom {
+    color: #6a11cb;
+    text-decoration: none;
+    font-weight: bold;
+}
+.link-custom:hover {
+    text-decoration: underline;
+}
