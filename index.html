@@ -3,71 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon_uni.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon_uni.png">
     <title>UniLife</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
 <body>
     <!-- Navigation Bar -->
-    <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
-        <div class="container">
-            <a class="navbar-brand" href="#">UniLife</a>
-            <div class="collapse navbar-collapse justify-content-end">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <button class="btn btn-outline-light mx-1 active">Home</button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="btn btn-outline-light mx-1">About</button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="btn btn-primary mx-1">Login</button>
-                    </li>
-                    <li class="nav-item">
-                        <button class="btn btn-success mx-1">Sign-In</button>
-                    </li>
-                </ul>
-            </div>
+    <div class="navbar">
+        <div class="nav-links">
+            <button class="nav-button active">Home</button>
+            <button class="nav-button">
+                <a href="about.html" class="text-decoration-none">About</a>
+            </button>
         </div>
-    </nav>
-
-    <!-- Main Content -->
-    <div class="container text-center my-5">
-        <div class="logo mb-4">
-            <img src="picture_home.png" alt="UniLife Logo" class="img-fluid" style="max-width: 200px;">
+        <div class="nav-actions">
+            <button class="action-button">Login</button>
+            <button class="action-button">Sign-In</button>
         </div>
-        <h1 class="display-3 fw-bold text-primary">Welcome to UniLife</h1>
-        <button class="btn btn-outline-dark mt-3 px-4 py-2">Made by StudInfo3</button>
     </div>
 
-    <!-- Footer -->
-    <footer class="bg-light text-center text-lg-start mt-auto py-4">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-md-6">
-                    <p class="mb-1">
-                        StudInfo3<br>
-                        Email: <a href="mailto:studinfo3@gmail.com" class="text-decoration-none text-primary">studinfo3@gmail.com</a>
-                    </p>
-                    <p class="mt-3">
-                        Follow us on Instagram: 
-                        <a href="https://instagram.com/unilife_studinfo3" target="_blank" class="text-decoration-none fw-bold">@unilife_studinfo3</a>
-                    </p>
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col">
-                    <a href="#top-content" class="text-dark text-decoration-none">
-                        <i class="fas fa-chevron-up"></i> Back to Top
-                    </a>
-                </div>
-            </div>
+    <!-- Main Content -->
+    <div class="container">
+        <div class="logo">
+            <img src="picture_home.png" alt="UniLife Logo">
         </div>
+        <h1 class="welcome">Welcome to UniLife</h1>
+        <button class="made-by">Made by StudInfo3</button>
+    </div>
+
+    <!-- Footnote -->
+    <footer>
+        
+        <p>Follow us on Instagram: 
+            <a href="https://instagram.com/unilife_studinfo3" target="_blank">@unilife_studinfo3</a>
+        </p>
     </footer>
 
     <!-- Script -->
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+   
 </body>
 </html>
