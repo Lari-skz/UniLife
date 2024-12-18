@@ -97,6 +97,10 @@ body {
 }
 
 /* Individual Member Styling */
+.pozele-L{
+    text-align: center; 
+    margin-right: 50px;
+}
 .pozele {
     text-align: center; 
 }
