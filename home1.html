@@ -1,1 +1,102 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniLife</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        header {
+            background-color: #6a0dad;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header h1 {
+            margin: 0;
+        }
+        nav {
+            display: flex;
+            gap: 15px;
+        }
+        nav a {
+            text-decoration: none;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+        nav a:hover {
+            background-color: #4b0082;
+        }
+        .content {
+            text-align: center;
+            padding: 20px;
+        }
+        .section {
+            display: inline-block;
+            margin: 20px;
+            text-align: center;
+        }
+        .section button {
+            border: none;
+            background-color: #f9f9f9;
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 24px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .section button:hover {
+            transform: scale(1.1);
+        }
+        .section p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>UniLife.ro</h1>
+        <nav>
+            <a href="#">Home</a>
+            <a href="about.html">About</a>
+            <a href="cumparaturi.html">Cumparaturi</a>
+            <a href="calendar.html">Calendar</a>
+            <a href="jobs.html">Jobs & All</a>
+            <a href="login.html">Login</a>
+            <a href="signin.html">Sign-In</a>
+        </nav>
+    </header>
+    <div class="content">
+        <div class="section">
+            <button onclick="location.href='cumparaturi.html'">🛒</button>
+            <p><b>Cumparaturi</b></p>
+            <p>Caută produsele de care ai nevoie și găsește cele mai bune prețuri și cele mai apropiate magazine.</p>
+        </div>
+        <div class="section">
+            <button onclick="location.href='calendar.html'">📅</button>
+            <p><b>Calendar/Organizator</b></p>
+            <p>Folosește calendarul UniLife pentru a-ți ușura viața de student. Adaugă examene, numără prezențele la cursuri și organizează orele de curs și muncă.</p>
+        </div>
+        <div class="section">
+            <button onclick="location.href='jobs.html'">💼</button>
+            <p><b>Joburi/Cursuri</b></p>
+            <p>Primește oferte de joburi personalizate, adaptate facultății și specializării tale.</p>
+        </div>
+    </div>
+</body>
+</html>
 
