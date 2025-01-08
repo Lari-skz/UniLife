@@ -1,26 +1,31 @@
 <!DOCTYPE html>
-<html lang="ro">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon_uni.png">
     <title>UniLife</title>
     <link rel="stylesheet" href="style.css">
-
 </head>
 <body>
-    <header>
-        <h1>UniLife.ro</h1>
-        <nav>
-            <a href="#">Home</a>
-            <a href="about.html">About</a>
-            <a href="cumparaturi.html">Cumparaturi</a>
-            <a href="calendar.html">Calendar</a>
-            <a href="jobs.html">Jobs & All</a>
-            <a href="login.html">Login</a>
-            <a href="signin.html">Sign-In</a>
-        </nav>
-    </header>
-    <div class="content">
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <div class="nav-links">
+           
+                <a href="index.html" class="text-decoration-home"> <button class="nav-button active">Home   </button></a>
+         
+           
+                <a href="about.html" > <button class="nav-button">About  </button></a>
+          
+        </div>
+        <div class="nav-actions">
+            
+        <a href="login.html" class="text-decoration-login"><button class="action-button">Log-In </button></a>
+           
+          
+         <a href="signin.html" class="text-decoration-signin">  <button class="action-button">Sign-In   </button></a>
+
+                <div class="content">
         <div class="section">
             <button onclick="location.href='cumparaturi.html'">🛒</button>
             <p><b>Cumparaturi</b></p>
@@ -37,6 +42,31 @@
             <p>Primește oferte de joburi personalizate, adaptate facultății și specializării tale.</p>
         </div>
     </div>
+
+
+         
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="logo">
+            <img src="picture_home.png" alt="UniLife Logo">
+        </div>
+        <h1 class="welcome">Welcome to UniLife</h1>
+        <button class="made-by">Made by StudInfo3</button>
+    </div>
+
+    <!-- Footnote -->
+    <footer>
+        
+        <p>Follow us on Instagram: 
+            <a href="https://instagram.com/unilife_studinfo3" target="_blank">@unilife_studinfo3</a>
+        </p>
+    </footer>
+
+    <!-- Script -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+   
 </body>
 </html>
-
