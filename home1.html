@@ -1,67 +1,64 @@
-<!DOCTYPE html>
+
+    <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon_uni.png">
-    <title>UniLife</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Home</title>
+    <link rel="stylesheet" href="stylehome.css">
 </head>
 <body>
     <!-- Navigation Bar -->
     <div class="navbar">
         <div class="nav-links">
+            <button class="nav-button active">
+                <a href="index.html" class="text-decoration-home">Home</a>
+            </button>
            
-                <a href="index.html" class="text-decoration-home"> <button class="nav-button active">Home   </button></a>
-         
-           
-                <a href="about.html" > <button class="nav-button">About  </button></a>
-          
+                <a href="about.html" class="text-decoration-about"> <button class="nav-button">About</button></a>
+                <a href="cumparaturi.html" class="text-decoration-about"> <button class="nav-button">Cumpărături</button></a>
+                <a href="calendar.html" class="text-decoration-about"> <button class="nav-button">Calendar</button></a>
+                <a href="jobs.html" class="text-decoration-about"> <button class="nav-button">Jobs & All</button></a>
+            
         </div>
         <div class="nav-actions">
-            
-        <a href="login.html" class="text-decoration-login"><button class="action-button">Log-In </button></a>
+            <button class="action-button">
+                <a href="login.html" class="text-decoration-login">Log-In</a>
+            </button>
+            <button class="action-button">
+                    <a href="signin.html" class="text-decoration-signin">Sign-In</a>
+            </button>
+        </div>
+    </div>  
+        <!-- Main Content -->
+    <div class="contentt">
            
-          
-         <a href="signin.html" class="text-decoration-signin">  <button class="action-button">Sign-In   </button></a>
-         
+            <div class="section" style="align-items: center;">
+                 <button onclick="location.href='cumparaturi.html'" class="location">
+                 <img src="button1.png" alt="Button Image"  class="buttons"  >
+                 </button>
+                <p><b>Cumparaturi</b></p>
+                <p>Caută produsele de care ai nevoie și găsește cele mai bune prețuri și cele mai apropiate magazine.</p>
+            </div>
+            
+            <div class="section">
+                 <button onclick="location.href='calendar.html'" class="location">
+                 <img src="button2.png" alt="Button Image" class="buttons" ">
+                 </button>
+                <p><b>Calendar/Organizator</b></p>
+                <p>Folosește calendarul UniLife pentru a-ți ușura viața de student. Adaugă examene, numără prezențele la cursuri și organizează orele de curs și muncă.</p>
+            </div>
+            
+            <div class="section">
+                <button onclick="location.href='jobs.html'" class="location">
+                <img src="button3.png" alt="Button Image" class="buttons">
+                </button>
+                <p><b>Joburi/Cursuri</b></p>
+                <p>Primește oferte de joburi personalizate, adaptate facultății și specializării tale.</p>
+           </div>
         </div>
-    </div>
     
-    <!-- Main Content -->
-                  <div class="content">
-        <div class="section">
-            <button onclick="location.href='cumparaturi.html'" style="border: none; background: none; padding: 0;">
-    <img src="button1.png" alt="Button Image" style="width: 200px; height: auto; cursor: pointer;">
-</button>
-            <p><b>Cumparaturi</b></p>
-            <p>Caută produsele de care ai nevoie și găsește cele mai bune prețuri și cele mai apropiate magazine.</p>
-        </div>
-        <div class="section">
-                        <button onclick="location.href='calendar.html'" style="border: none; background: none; padding: 0;">
-    <img src="button2.png" alt="Button Image" style="width: 200px; height: auto; cursor: pointer;">
-</button>
-            <p><b>Calendar/Organizator</b></p>
-            <p>Folosește calendarul UniLife pentru a-ți ușura viața de student. Adaugă examene, numără prezențele la cursuri și organizează orele de curs și muncă.</p>
-        </div>
-        <div class="section">
-                        <button onclick="location.href='jobs.html'" style="border: none; background: none; padding: 0;">
-    <img src="button3.png" alt="Button Image" style="width: 200px; height: auto; cursor: pointer;">
-</button>
-            <p><b>Joburi/Cursuri</b></p>
-            <p>Primește oferte de joburi personalizate, adaptate facultății și specializării tale.</p>
-      </div>
-    </div>
-    <!-- Footnote -->
-    <footer>
-        
-        <p>Follow us on Instagram: 
-            <a href="https://instagram.com/unilife_studinfo3" target="_blank">@unilife_studinfo3</a>
-        </p>
-    </footer>
-
-    <!-- Script -->
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
-   
-</body>
-</html>
+       
+    </body>
+    </html>
