@@ -1,4 +1,4 @@
-* General Reset */
+/* General Reset */
 *{
     margin: 0;
     padding: 0;
@@ -76,4 +76,7 @@ body {
 .action-button:hover:active{
     background-color: black;
 }
+.container {
+    margin-top: 50px;
+
 
