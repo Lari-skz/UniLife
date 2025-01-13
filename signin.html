@@ -42,8 +42,8 @@
                 <input type="email" class="form-control" placeholder="E-mail" required>
                 <input type="password" class="form-control" placeholder="Password" required>
                 <input type="password" class="form-control" placeholder="Confirm Password" required>
-                <select type="Oras" value="" disabled selected class="form-control" required> 
-                    <option value="" disabled selected ; > <input type="password" class="form-control" placeholder="City in which you study?" required/></option>
+                    <select class="form-control" required style="color:rgb(89, 92, 95);" onchange="this.style.color = 'black';"> 
+                    <option value="" disabled selected style="color:rgb(89, 92, 95)">City in which you study?</option>
                         <option value="Sibiu">Alba Iulia</option>
                         <option value="Brasov">Arad</option>
                         <option value="Cluj">Bacău</option>
@@ -78,11 +78,11 @@
 
 
                 <div class="mb-3">
-                    <span class="text-dark fw-bold">Ai deja un cont? 
+                    <span class="text-dark fw-bold">Ai deja un cont?
                         <a href="login.html" class="link-custom">Conectează-te.</a>
                     </span>
                 </div>
-                <button type="submit" class="btn btn-custom w-50">Create Account</button>
+                <button type="submit" class="btn btn-custom w-50"><a class="text" >Create Account</a></button>
             </form>
         </div>
     </div>
@@ -94,3 +94,5 @@
             <a href="https://instagram.com/unilife_studinfo3" target="_blank" class="fw-bold text-decoration-none text-primary">@unilife_studinfo3</a>
         </p>
     </footer>
+                    
+
