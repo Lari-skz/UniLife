@@ -97,13 +97,13 @@ body {
     border-radius: 20px;
     padding: 10px 20px;
     background-color: #fff;
-    color: #333;
+    color: #eee;
     font-weight: bold;
     border: none;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 .btn-custom:hover {
-    background-color: #eee;
+    background-color: #333;
 }
 .link-custom {
     color: #6a11cb;
