@@ -1,1 +1,79 @@
+* General Reset */
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f8f8f8;
+    text-align: center;
+}
+
+/* Navigation Bar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background: linear-gradient(to right, #4a00e0, #8e2de2);
+}
+
+.nav-links .nav-button,
+.nav-actions .action-button {
+    background-color: black;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 8px;
+    margin: 0 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+
+.nav-links .nav-button.active {
+    background-color: #fff;
+    color: black;
+}
+.text-decoration-home{ 
+    color: black;
+   text-decoration:none;
+   
+
+}
+.text-decoration-about{ 
+    color: white;
+   text-decoration:none;
+   
+
+}
+.text-decoration-login{
+    color: white;
+    text-decoration:none;
+}
+.text-decoration-signin{
+    color: white;
+    text-decoration:none;
+}
+.nav-button.active:hover{
+    background-color: #4a00e0;
+}
+.nav-button.active:hover:active{
+    background-color: white;
+}
+
+.nav-button:hover{
+    background-color:#4a00e0;
+}
+.nav-button:hover:active{
+    background-color:black;
+}
+.action-button:hover{
+    background-color:#8e2de2;
+}
+.action-button:hover:active{
+    background-color: black;
+}
 
