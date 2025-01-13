@@ -44,6 +44,30 @@ document.getElementById('signInForm').addEventListener('submit', function(event)
   users.push({ email, password });
   messageElement.innerHTML = `<p style="color: green;">Înregistrare reușită! Acum te poți autentifica.</p>`;
 
+
+  //unable opening a page until the user logs in
+  function click() {
+    inputname = $('#name').val();
+    inputpassword =$('#pass').val();
+
+    for (i in data.username )      //to match username with provided array
+      { 
+        name = data.username[i];
+
+        for ( i in data.password){
+            pass = data.password[i];
+
+            if (inputname == name & inputpassword == pass ){
+                window.open('welcome1.html','_self');
+            }               
+        }
+    }
+
+    if (inputname != name & inputpassword != pass ){
+        alert("Wrong Password");
+    }
+}
+
   // Resetăm formularul
   document.getElementById('signInForm').reset();
 });
