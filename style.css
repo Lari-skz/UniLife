@@ -92,6 +92,13 @@ body {
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
 }
 
+.error {
+    font-size: 38px;
+    font-weight: bold;
+    color: #4a00e0;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+
 .made-by {
     margin-top: 20px;
     padding: 10px 20px;
