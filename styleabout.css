@@ -48,6 +48,14 @@ body {
    
 
 }
+.text-decoration-login{
+    color: white;
+    text-decoration:none;
+}
+.text-decoration-signin{
+    color: white;
+    text-decoration:none;
+}
 .nav-button.active:hover{
     background-color: #4a00e0;
 }
@@ -71,18 +79,19 @@ body {
 
 .container {
     text-align: center; 
-    margin: 50px auto;
+    margin: 90px auto;
+
 }
 
 /* Header Styles */
 .display-4 {
-    font-size: 3rem;
+    font-size: 3.2rem;
     color: #6b21a8;
     font-weight: bold;
 }
 
 .membri-echipei {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     margin-bottom: 2rem;
     color: #333;
 }
@@ -92,14 +101,14 @@ body {
     display: flex; 
     justify-content: center; 
     align-items: flex-start; 
-    gap: 2rem; 
+    gap: 3.5rem; 
     flex-wrap: wrap; 
 }
 
 /* Individual Member Styling */
 .pozele-L{
     text-align: center; 
-    margin-right: 50px;
+    margin-right: 60px;
 }
 .pozele {
     text-align: center; 
@@ -109,9 +118,8 @@ body {
     border-radius: 50%; 
     object-fit: cover; 
     border:transparent;
-    width: 250px; 
-    height: 250px;
-    
+    width: 300px; 
+    height: 300px;
     
 
 
@@ -120,8 +128,8 @@ body {
     border-radius: 50%; 
     object-fit: cover; 
     border:transparent;
-     width: 150px;
-     height: 150px;
+    width: 200px;
+    height: 200px;
 }
 
 .nume {
@@ -136,3 +144,29 @@ body {
     color: #555;
     font-weight: 600;
 }
+.about_us{
+   
+    font-weight:bold;
+    color:#6b21a8;
+    font-size:3rem;
+}
+.paragraf{
+    align-content: center;
+    display: flex;
+    justify-content:space-evenly;
+    margin:50px;
+}
+.text_descriere{
+
+   font-family:Verdana, Geneva, Tahoma, sans-serif;
+   font-size:1.3em;
+  
+   
+
+}
+.imagineabout{
+    width:600px;
+   height:auto;
+
+}
+
