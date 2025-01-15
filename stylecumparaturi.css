@@ -92,8 +92,8 @@ body {
 }
 
 .buttons{
-    width: 200px;
-    height: auto; 
+    width: 150px;
+    height: 150px; 
     cursor: pointer;
     margin:none;
 }
