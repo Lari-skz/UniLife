@@ -6,6 +6,18 @@
     <link rel="icon" type="image/png" sizes="32x32" href="favicon_uni.png">
     <title>UniLife</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .username-display {
+            font-size: 18px;
+            font-weight: bold;
+            color: #fff;
+            padding: 10px 20px;
+            background: #007bff;
+            border-radius: 5px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation Bar -->
@@ -19,7 +31,7 @@
         </div>
         <div class="nav-actions">
             <div id="user-info" style="display: none;">
-                <span id="username"></span>
+                <span id="username" class="username-display" onclick="window.location.href='profile.html';"></span>
             </div>
             <a href="login.html" class="text-decoration-login"><button class="action-button" id="login-btn">Log-In</button></a>
             <a href="signin.html" class="text-decoration-signin"><button class="action-button" id="signin-btn">Sign-In</button></a>
