@@ -14,10 +14,14 @@ app.use(express.static(__dirname)); // Servește fișierele din același directo
 app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); // Servește directorul uploads
 
 // MongoDB Atlas connection
-const db = 'mongodb+srv://oviwansan:1234@unilife.hhsrc.mongodb.net/?retryWrites=true&w=majority&appName=UniLife';
-mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log('MongoDB connected...'))
-    .catch(err => console.log('MongoDB connection error:', err));
+const db = process.env.MONGODB_URI || 'mongodb+srv://oviwansan:1234@unilife.hhsrc.mongodb.net/UniLife?retryWrites=true&w=majority&appName=UniLife';
+mongoose.connect(db, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    serverSelectionTimeoutMS: 30000 // 30 seconds timeout
+})
+.then(() => console.log('MongoDB connected...'))
+.catch(err => console.error('MongoDB connection error:', err));
 
 // Set storage for Multer
 const storage = multer.diskStorage({
@@ -70,7 +74,7 @@ app.post('/signup', upload.single('profileImage'), async (req, res) => {
 // Login Route
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;
-    console.log('Login request received');
+    console.log('Login request received with username:', username);
     try {
         const user = await User.findOne({ username });
         if (user) {
