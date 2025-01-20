@@ -109,3 +109,13 @@ body {
 .link-custom:hover {
     text-decoration: underline;
 }
+.text{
+    color:white;
+    text-decoration:none; 
+}
+.text:hover{
+    color:#333;
+}
+.text-dark{
+    color:#757575;
+}
