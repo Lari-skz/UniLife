@@ -1,0 +1,99 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f8f8f8;
+}
+
+/* Sidebar */
+.sidebar {
+    background-color: #343a40;
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+}
+
+.sidebar .nav-link {
+    color: white;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.sidebar .nav-link:hover {
+    background-color: #495057;
+}
+
+.sidebar .nav-link.active {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Profile Container */
+.profile-container {
+    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.profile-header {
+    margin-bottom: 20px;
+}
+
+.profile-header h2 {
+    font-size: 36px;
+    margin-bottom: 10px;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.profile-image {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 4px solid #ffffff;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.profile-details p {
+    font-size: 20px;
+    margin: 10px 0;
+}
+
+.profile-details strong {
+    display: inline-block;
+    width: 120px;
+    text-align: left;
+}
+
+.btn-custom {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.btn-custom:hover {
+    background-color: #0056b3;
+}
+
+.username-display {
+    font-size: 18px;
+    font-weight: bold;
+    color: #fff;
+    padding: 10px 20px;
+    background: #007bff;
+    border-radius: 5px;
+    margin-right: 10px;
+    cursor: pointer;
+}
