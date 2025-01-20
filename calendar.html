@@ -3,29 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon_uni.png">
-    <title>Calendar-UniLife</title>
-    <link rel="stylesheet" href="stylecalendar.css">
+    <title>Calendar</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Navigation Bar -->
-    <div class="navbar">
-        <div class="nav-links">
-            <button class="nav-button active">
-                <a href="index.html" class="text-decoration-home">Home</a>
-            </button>
-           
-                <a href="about.html" class="text-decoration-about"> <button class="nav-button">About</button></a>
-                <a href="cumparaturi.html" class="text-decoration-about"> <button class="nav-button">Cumpărături</button></a>
-                <a href="calendar.html" class="text-decoration-about"> <button class="nav-button">Calendar</button></a>
-                <a href="jobs.html" class="text-decoration-about"> <button class="nav-button">Jobs & All</button></a>
-        </div>
-        <div class="nav-actions">
-            <button class="action-button">
-                <a href="login.html" class="text-decoration-login">Log-In</a>
-            </button>
-            <button class="action-button">
-                    <a href="singin.html" class="text-decoration-signin">Sign-In</a>
-            </button>
-        </div>
-    </div>
+    <header>
+        <nav>
+            <ul class="navbar">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="cumparaturi.html">Cumpărături</a></li>
+                <li><a href="calendar.html" class="active">Calendar</a></li>
+                <li><a href="jobs.html">Jobs & All</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <button onclick="location.href='login.html'">Login</button>
+                <button onclick="location.href='signup.html'">Sign-In</button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="planner-section">
+            <div class="planner-header">
+                <img src="favicon_uni.png" alt="Calendar Icon" class="icon">
+                <h2>Planner</h2>
+            </div>
+            <div class="calendar">
+                <h3>JANUARY 2025</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>S</th>
+                            <th>M</th>
+                            <th>T</th>
+                            <th>W</th>
+                            <th>T</th>
+                            <th>F</th>
+                            <th>S</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td></td><td></td><td></td><td>1</td><td>2</td><td>3</td><td>4</td>
+                        </tr>
+                        <tr>
+                            <td>5</td><td>6</td><td>7</td><td>8</td><td>9</td><td>10</td><td>11</td>
+                        </tr>
+                        <!-- Complete the rest of the calendar -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section class="materials-section">
+            <h3>Materiale Suport</h3>
+            <ul>
+                <li>Subject 1</li>
+                <li>Subject 2</li>
+                <li>Subject 3</li>
+            </ul>
+        </section>
+
+        <section class="todo-section">
+            <h3>To Do List</h3>
+            <ul>
+                <li>To do</li>
+                <li>To do</li>
+                <li>To do</li>
+                <li>To do</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Calendar App</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
