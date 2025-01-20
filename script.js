@@ -89,3 +89,10 @@ Date.prototype.addHours = function(h) {
   document.getElementById('signInForm').reset();
 });
 
+// Basic interactivity (optional)
+document.addEventListener('DOMContentLoaded', () => {
+    console.log("Page loaded successfully!");
+    // Add further functionality as needed
+});
+
+
