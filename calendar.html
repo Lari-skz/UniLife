@@ -32,13 +32,36 @@
     .nav-button {
         background: none;
         border: none;
-        color: black;
+        color: white;
         font-size: 16px;
         cursor: pointer;
         padding: 0.5rem 1rem;
         border-radius: 5px;
         transition: background-color 0.3s ease;
     }
+
+.nav-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 0 10px;
+}
+
+.sageata {
+    font-size: 24px; /* Dimensiune mai mare pentru săgeți */
+    color: black;
+    cursor: pointer;
+    border: none;
+    background: none;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.sageata:hover {
+    transform: scale(1.2);
+    color: #4a00e0;
+}
+
 
     .nav-button:hover {
         background-color: #8e2de2;
@@ -207,11 +230,11 @@
         <!-- Calendar Section -->
         <div class="card">
             <h2>Calendar</h2>
-            <div class="nav-buttons">
-                <span id="prev-month" class="nav-button">&#60;</span>
-                <h3 id="month-year"></h3> <!-- This will display the month and year -->
-                <span id="next-month" class="nav-button">&#62;</span>
-            </div>
+         <div class="nav-buttons">
+    <span id="prev-month" class="sageata">&#60;</span>
+    <h3 id="month-year"></h3>
+    <span id="next-month" class="sageata">&#62;</span>
+</div>
             <div id="calendar" class="calendar"></div>
             <div id="selected-date" class="selected-date">Select a date</div>
             <input id="event-input" class="input" type="text" placeholder="Add an event" />
