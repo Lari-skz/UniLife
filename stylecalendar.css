@@ -1,220 +1,175 @@
-    body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(to bottom right, #6a1b9a, #9c27b0);
-            color: white;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
+  body {
+        font-family: Arial, sans-serif;
+        background: white;
+        color: black;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
 
-        .navbar {
-            width: 100%;
-            background-color: #6a1b9a;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0.5rem 1rem;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
+    .navbar {
+        width: 100%;
+        background: linear-gradient(to right, #4a00e0, #8e2de2);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.5rem 1rem;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
 
-        .nav-links {
-            display: flex;
-            gap: 1rem;
-        }
+    .nav-button {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        padding: 0.5rem 1rem;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
 
-        .nav-button {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
+    .nav-button:hover {
+        background-color: #8e2de2;
+    }
 
-        .nav-button:hover {
-            background-color: #9c27b0;
-        }
+    .nav-button.active {
+        background-color: #4a00e0;
+        font-weight: bold;
+    }
 
-        .nav-button.active {
-            background-color: #4a148c;
-            font-weight: bold;
-        }
+    .container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        width: 80%;
+        max-width: 1200px;
+        margin-top: 2rem;
+    }
 
-        .nav-actions {
-            display: flex;
-            gap: 1rem;
-        }
+    .card {
+        background-color: #f3f3f3;
+        color: black;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 2rem;
+    }
 
-        .action-button {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
+    .card h2 {
+        text-align: center;
+        font-size: 24px;
+        margin-bottom: 1rem;
+    }
 
-        .action-button:hover {
-            background-color: #9c27b0;
-        }
+    /* Calendar Styles */
+    .calendar {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr); /* Calendar ca matrice */
+        gap: 10px;
+        padding: 10px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
 
-        .container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 2rem;
-            width: 80%;
-            max-width: 1200px;
-            margin-top: 2rem;
-        }
+    .calendar div {
+        padding: 15px;
+        text-align: center;
+        background-color: #ddd;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 18px;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
 
-        .card {
-            background-color: #7851a9;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            padding: 2rem;
-        }
+    .calendar div:hover {
+        background-color: #4a00e0;
+        color: white;
+        transform: scale(1.1);
+    }
 
-        .card h2 {
-            text-align: center;
-            font-size: 24px;
-            margin-bottom: 1rem;
-        }
+    .calendar div.selected {
+        background-color: #8e2de2;
+        color: white;
+        border: 2px solid #4a00e0;
+        font-weight: bold;
+    }
 
-        /* Calendar Styles */
-        .calendar {
-            display: grid;
-            grid-template-columns: repeat(7, 1fr);
-            gap: 8px;
-            text-align: center;
-            margin-top: 1rem;
-        }
+    .selected-date {
+        margin-top: 20px;
+        padding: 10px;
+        background-color: #4a00e0;
+        border-radius: 5px;
+        color: white;
+        text-align: center;
+    }
 
-        .calendar div {
-            padding: 15px;
-            background-color: #e1bee7;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 18px;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-        }
+    /* To-Do List Styles */
+    .todo-item {
+        background-color: #f3f3f3;
+        color: black;
+        padding: 10px;
+        margin: 8px 0;
+        border-radius: 5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
-        .calendar div:hover {
-            background-color: #9c27b0;
-            color: white;
-            transform: scale(1.1);
-        }
+    .todo-item button {
+        background-color: #ff1744;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        padding: 5px 10px;
+    }
 
-        .calendar div.selected {
-            background-color: #6a1b9a;
-            color: white;
-            border: 2px solid #fff;
-            font-weight: bold;
-        }
+    .todo-item button:hover {
+        background-color: #f44336;
+    }
 
-        /* Event Section Styles */
-        .event-list {
-            margin-top: 20px;
-        }
+    .input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        color: black;
+    }
 
-        .event-item {
-            background-color: #e1bee7;
-            padding: 10px;
-            margin: 8px 0;
-            border-radius: 5px;
-            display: flex;
-            justify-content: space-between;
-        }
+    .button {
+        background-color: #4a00e0;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
 
-        .event-item button {
-            background-color: #ff1744;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-            padding: 5px 10px;
-        }
+    .button:hover {
+        background-color: #8e2de2;
+    }
 
-        .event-item button:hover {
-            background-color: #f44336;
-        }
+    .event-item {
+        background-color: #f3f3f3;
+        padding: 10px;
+        margin: 8px 0;
+        border-radius: 5px;
+        display: flex;
+        justify-content: space-between;
+    }
 
-        .button {
-            background-color: #6a1b9a;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+    .event-item button {
+        background-color: #ff1744;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        padding: 5px 10px;
+    }
 
-        .button:hover {
-            background-color: #9c27b0;
-        }
-
-        .input {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-        }
-
-        /* Navigation buttons */
-        .nav-buttons {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 1rem;
-        }
-
-        .nav-button {
-            font-size: 30px;
-            cursor: pointer;
-        }
-
-        /* To-Do List Styles */
-        .todo-list {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        .todo-item {
-            background-color: #e1bee7;
-            padding: 10px;
-            margin: 8px 0;
-            border-radius: 5px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .todo-item input[type="checkbox"] {
-            margin-right: 10px;
-        }
-
-        .todo-item button {
-            background-color: #ff1744;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-            padding: 5px 10px;
-        }
-
-        .todo-item button:hover {
-            background-color: #f44336;
-        }
-
-        /* Styling for displaying selected date */
-        .selected-date {
-            margin-top: 20px;
-            padding: 10px;
-            background-color: #6a1b9a;
-            border-radius: 5px;
-            color: white;
-            text-align: center;
-        }
+    .event-item button:hover {
+        background-color: #f44336;
+    }
