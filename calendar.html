@@ -1,149 +1,389 @@
-import React, { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import "./styles.css";
-
-const CalendarAndTodo = () => {
-  const [tasks, setTasks] = useState([]);
-  const [task, setTask] = useState("");
-  const [events, setEvents] = useState([]);
-  const [selectedDate, setSelectedDate] = useState(null);
-  const [event, setEvent] = useState("");
-
-  const handleAddTask = () => {
-    if (task.trim()) {
-      setTasks([...tasks, { text: task, completed: false }]);
-      setTask("");
-    }
-  };
-
-  const handleDeleteTask = (index) => {
-    const newTasks = tasks.filter((_, i) => i !== index);
-    setTasks(newTasks);
-  };
-
-  const handleTaskComplete = (index) => {
-    const newTasks = tasks.map((task, i) =>
-      i === index ? { ...task, completed: !task.completed } : task
-    );
-    setTasks(newTasks);
-  };
-
-  const daysInMonth = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate();
-  const firstDay = new Date(new Date().getFullYear(), new Date().getMonth(), 1).getDay();
-
-  const handleAddEvent = () => {
-    if (event.trim() && selectedDate) {
-      setEvents([...events, { date: selectedDate, text: event }]);
-      setEvent("");
-      setSelectedDate(null);
-    }
-  };
-
-  return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-purple-500 to-purple-800 text-white">
-      <h1 className="text-4xl font-bold mb-8">Calendar & To-Do List</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 w-11/12 max-w-4xl">
-        {/* Calendar Section */}
-        <Card className="rounded-2xl shadow-lg">
-          <CardContent>
-            <h2 className="text-2xl font-semibold text-center mb-4">Calendar</h2>
-            <div className="grid grid-cols-7 gap-2">
-              {Array.from({ length: firstDay }).map((_, index) => (
-                <div key={`empty-${index}`} className="h-10"></div>
-              ))}
-              {Array.from({ length: daysInMonth }).map((_, index) => (
-                <div
-                  key={index}
-                  className={`h-10 flex items-center justify-center rounded cursor-pointer ${
-                    selectedDate === index + 1
-                      ? "bg-purple-600"
-                      : "bg-purple-300"
-                  } text-purple-800 font-semibold`}
-                  onClick={() => setSelectedDate(index + 1)}
-                >
-                  {index + 1}
-                </div>
-              ))}
-            </div>
-            <div className="mt-4">
-              <input
-                type="text"
-                className="w-full px-4 py-2 rounded-lg text-black"
-                placeholder="Add an event"
-                value={event}
-                onChange={(e) => setEvent(e.target.value)}
-              />
-              <Button
-                onClick={handleAddEvent}
-                className="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg mt-2"
-              >
-                Add Event
-              </Button>
-              <ul className="mt-4 space-y-2">
-                {events
-                  .filter((e) => e.date === selectedDate)
-                  .map((e, index) => (
-                    <li
-                      key={index}
-                      className="bg-purple-300 text-purple-800 px-4 py-2 rounded-lg"
-                    >
-                      {e.text}
-                    </li>
-                  ))}
-              </ul>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* To-Do List Section */}
-        <Card className="rounded-2xl shadow-lg">
-          <CardContent>
-            <h2 className="text-2xl font-semibold text-center mb-4">To-Do List</h2>
-            <div className="flex gap-2 mb-4">
-              <input
-                type="text"
-                className="flex-1 px-4 py-2 rounded-lg text-black"
-                placeholder="Add a new task"
-                value={task}
-                onChange={(e) => setTask(e.target.value)}
-              />
-              <Button
-                onClick={handleAddTask}
-                className="bg-purple-500 hover:bg-purple-600 text-white px-4 py-2 rounded-lg"
-              >
-                Add
-              </Button>
-            </div>
-            <ul className="space-y-2">
-              {tasks.map((task, index) => (
-                <li
-                  key={index}
-                  className="flex items-center justify-between bg-purple-300 text-purple-800 px-4 py-2 rounded-lg"
-                >
-                  <div className="flex items-center gap-2">
-                    <input
-                      type="checkbox"
-                      checked={task.completed}
-                      onChange={() => handleTaskComplete(index)}
-                      className="form-checkbox h-5 w-5 text-purple-600"
-                    />
-                    <span className={task.completed ? "line-through" : ""}>{task.text}</span>
-                  </div>
-                  <button
-                    onClick={() => handleDeleteTask(index)}
-                    className="text-red-500 hover:text-red-700"
-                  >
-                    Delete
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Card>
-      </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon_uni.png">
+    <title>Cumparaturi-UniLife</title>
+    <link rel="stylesheet" href="stylecalendar.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet"   href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200">
+	<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <div class="nav-links">
+            <button class="nav-button active">
+                <a href="index.html" class="text-decoration-home">Home</a>
+            </button>
+           
+                <a href="about.html" class="text-decoration-about"> <button class="nav-button">About</button></a>
+                <a href="cumparaturi.html" class="text-decoration-about"> <button class="nav-button">Cumpărături</button></a>
+                <a href="calendar.html" class="text-decoration-about"> <button class="nav-button">Calendar</button></a>
+                <a href="jobs.html" class="text-decoration-about"> <button class="nav-button">Jobs & All</button></a>
+        </div>
     </div>
-  );
-};
 
-export default CalendarAndTodo;
+
+    <br>
+    <br>
+
+    <div class="planner-button" margin-top="30px">
+        <div class="icon-container">
+            <i class="bi bi-calendar"></i>
+        </div>
+        <span>Planner</span>
+    </div>
+
+
+
+
+
+    <div  class="container-flex">
+
+
+ 
+    <div id="right" >
+        <h3 id="monthAndYear"></h3>
+        <div class="button-container-calendar">
+            <button id="previous"
+                    onclick="previous()">
+                ‹
+            </button>
+            <button id="next"
+                    onclick="next()">
+                ›
+            </button>
+        </div>
+        <table class="table-calendar"
+            id="calendar"
+            data-lang="en">
+            <thead id="thead-month"></thead>
+            <!-- Table body for displaying the calendar -->
+            <tbody id="calendar-body"></tbody>
+        </table>
+        <div class="footer-container-calendar">
+            <label for="month">Jump To: </label>
+            <!-- Dropdowns to select a specific month and year -->
+            <select id="month" onchange="jump()">
+                <option value=0>Jan</option>
+                <option value=1>Feb</option>
+                <option value=2>Mar</option>
+                <option value=3>Apr</option>
+                <option value=4>May</option>
+                <option value=5>Jun</option>
+                <option value=6>Jul</option>
+                <option value=7>Aug</option>
+                <option value=8>Sep</option>
+                <option value=9>Oct</option>
+                <option value=10>Nov</option>
+                <option value=11>Dec</option>
+            </select>
+            <!-- Dropdown to select a specific year -->
+            <select id="year" onchange="jump()"></select>
+        </div>
+      </div>
+
+
+        <div class="materiale-suport" >
+            <h2>Materiale Suport</h2>
+            <ul>
+                <li>Subject 1</li>
+                <li>Subject 2</li>
+                <li>Subject 3</li>
+            </ul>
+        </div>
+
+        <div class="to-do-list" >
+            <h2>To Do List</h2>
+            <ul>
+                <li>To do</li>
+                <li>To do</li>
+                <li>To do</li>
+                <li>To do</li>
+                <li>To do</li>
+            </ul>
+        </div>
+
+</div>
+
+
+    <script>
+
+        // script.js
+
+// Define an array to store events
+let events = [];
+
+// letiables to store event input fields and reminder list
+let eventDateInput =
+	document.getElementById("eventDate");
+let eventTitleInput =
+	document.getElementById("eventTitle");
+let eventDescriptionInput =
+	document.getElementById("eventDescription");
+let reminderList =
+	document.getElementById("reminderList");
+
+// Counter to generate unique event IDs
+let eventIdCounter = 1;
+
+// Function to add events
+function addEvent() {
+	let date = eventDateInput.value;
+	let title = eventTitleInput.value;
+	let description = eventDescriptionInput.value;
+
+	if (date && title) {
+		// Create a unique event ID
+		let eventId = eventIdCounter++;
+
+		events.push(
+			{
+				id: eventId, date: date,
+				title: title,
+				description: description
+			}
+		);
+		showCalendar(currentMonth, currentYear);
+		eventDateInput.value = "";
+		eventTitleInput.value = "";
+		eventDescriptionInput.value = "";
+		displayReminders();
+	}
+}
+
+// Function to delete an event by ID
+function deleteEvent(eventId) {
+	// Find the index of the event with the given ID
+	let eventIndex =
+		events.findIndex((event) =>
+			event.id === eventId);
+
+	if (eventIndex !== -1) {
+		// Remove the event from the events array
+		events.splice(eventIndex, 1);
+		showCalendar(currentMonth, currentYear);
+		displayReminders();
+	}
+}
+
+// Function to display reminders
+function displayReminders() {
+	reminderList.innerHTML = "";
+	for (let i = 0; i < events.length; i++) {
+		let event = events[i];
+		let eventDate = new Date(event.date);
+		if (eventDate.getMonth() ===
+			currentMonth &&
+			eventDate.getFullYear() ===
+			currentYear) {
+			let listItem = document.createElement("li");
+			listItem.innerHTML =
+				`<strong>${event.title}</strong> - 
+			${event.description} on 
+			${eventDate.toLocaleDateString()}`;
+
+			// Add a delete button for each reminder item
+			let deleteButton =
+				document.createElement("button");
+			deleteButton.className = "delete-event";
+			deleteButton.textContent = "Delete";
+			deleteButton.onclick = function () {
+				deleteEvent(event.id);
+			};
+
+			listItem.appendChild(deleteButton);
+			reminderList.appendChild(listItem);
+		}
+	}
+}
+
+// Function to generate a range of 
+// years for the year select input
+function generate_year_range(start, end) {
+	let years = "";
+	for (let year = start; year <= end; year++) {
+		years += "<option value='" +
+			year + "'>" + year + "</option>";
+	}
+	return years;
+}
+
+// Initialize date-related letiables
+today = new Date();
+currentMonth = today.getMonth();
+currentYear = today.getFullYear();
+selectYear = document.getElementById("year");
+selectMonth = document.getElementById("month");
+
+createYear = generate_year_range(1970, 2050);
+
+document.getElementById("year").innerHTML = createYear;
+
+let calendar = document.getElementById("calendar");
+
+let months = [
+	"January",
+	"February",
+	"March",
+	"April",
+	"May",
+	"June",
+	"July",
+	"August",
+	"September",
+	"October",
+	"November",
+	"December"
+];
+let days = [
+	"Sun", "Mon", "Tue", "Wed",
+	"Thu", "Fri", "Sat"];
+
+$dataHead = "<tr>";
+for (dhead in days) {
+	$dataHead += "<th data-days='" +
+		days[dhead] + "'>" +
+		days[dhead] + "</th>";
+}
+$dataHead += "</tr>";
+
+document.getElementById("thead-month").innerHTML = $dataHead;
+
+monthAndYear =
+	document.getElementById("monthAndYear");
+showCalendar(currentMonth, currentYear);
+
+// Function to navigate to the next month
+function next() {
+	currentYear = currentMonth === 11 ?
+		currentYear + 1 : currentYear;
+	currentMonth = (currentMonth + 1) % 12;
+	showCalendar(currentMonth, currentYear);
+}
+
+// Function to navigate to the previous month
+function previous() {
+	currentYear = currentMonth === 0 ?
+		currentYear - 1 : currentYear;
+	currentMonth = currentMonth === 0 ?
+		11 : currentMonth - 1;
+	showCalendar(currentMonth, currentYear);
+}
+
+// Function to jump to a specific month and year
+function jump() {
+	currentYear = parseInt(selectYear.value);
+	currentMonth = parseInt(selectMonth.value);
+	showCalendar(currentMonth, currentYear);
+}
+
+// Function to display the calendar
+function showCalendar(month, year) {
+	let firstDay = new Date(year, month, 1).getDay();
+	tbl = document.getElementById("calendar-body");
+	tbl.innerHTML = "";
+	monthAndYear.innerHTML = months[month] + " " + year;
+	selectYear.value = year;
+	selectMonth.value = month;
+
+	let date = 1;
+	for (let i = 0; i < 6; i++) {
+		let row = document.createElement("tr");
+		for (let j = 0; j < 7; j++) {
+			if (i === 0 && j < firstDay) {
+				cell = document.createElement("td");
+				cellText = document.createTextNode("");
+				cell.appendChild(cellText);
+				row.appendChild(cell);
+			} else if (date > daysInMonth(month, year)) {
+				break;
+			} else {
+				cell = document.createElement("td");
+				cell.setAttribute("data-date", date);
+				cell.setAttribute("data-month", month + 1);
+				cell.setAttribute("data-year", year);
+				cell.setAttribute("data-month_name", months[month]);
+				cell.className = "date-picker";
+				cell.innerHTML = "<span>" + date + "</span";
+
+				if (
+					date === today.getDate() &&
+					year === today.getFullYear() &&
+					month === today.getMonth()
+				) {
+					cell.className = "date-picker selected";
+				}
+
+				// Check if there are events on this date
+				if (hasEventOnDate(date, month, year)) {
+					cell.classList.add("event-marker");
+					cell.appendChild(
+						createEventTooltip(date, month, year)
+				);
+				}
+
+				row.appendChild(cell);
+				date++;
+			}
+		}
+		tbl.appendChild(row);
+	}
+
+	displayReminders();
+}
+
+// Function to create an event tooltip
+function createEventTooltip(date, month, year) {
+	let tooltip = document.createElement("div");
+	tooltip.className = "event-tooltip";
+	let eventsOnDate = getEventsOnDate(date, month, year);
+	for (let i = 0; i < eventsOnDate.length; i++) {
+		let event = eventsOnDate[i];
+		let eventDate = new Date(event.date);
+		let eventText = `<strong>${event.title}</strong> - 
+			${event.description} on 
+			${eventDate.toLocaleDateString()}`;
+		let eventElement = document.createElement("p");
+		eventElement.innerHTML = eventText;
+		tooltip.appendChild(eventElement);
+	}
+	return tooltip;
+}
+
+// Function to get events on a specific date
+function getEventsOnDate(date, month, year) {
+	return events.filter(function (event) {
+		let eventDate = new Date(event.date);
+		return (
+			eventDate.getDate() === date &&
+			eventDate.getMonth() === month &&
+			eventDate.getFullYear() === year
+		);
+	});
+}
+
+// Function to check if there are events on a specific date
+function hasEventOnDate(date, month, year) {
+	return getEventsOnDate(date, month, year).length > 0;
+}
+
+// Function to get the number of days in a month
+function daysInMonth(iMonth, iYear) {
+	return 32 - new Date(iYear, iMonth, 32).getDate();
+}
+
+// Call the showCalendar function initially to display the calendar
+showCalendar(currentMonth, currentYear);
+
+    </script>
+
+
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+          <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+          <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>
