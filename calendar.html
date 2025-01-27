@@ -1,365 +1,446 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon_uni.png">
-  <title>Calendar & To-Do List</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(to bottom right, #6a1b9a, #9c27b0);
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
-    .container {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-      width: 80%;
-      max-width: 1200px;
-    }
-    .card {
-      background-color: white;
-      border-radius: 10px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-      padding: 2rem;
-    }
-    .card h2 {
-      text-align: center;
-      font-size: 24px;
-      margin-bottom: 1rem;
-    }
-    /* Calendar Styles */
-    .calendar {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      gap: 8px;
-      text-align: center;
-      margin-top: 1rem;
-    }
-    .calendar div {
-      padding: 15px;
-      background-color: #e1bee7;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 18px;
-      transition: background-color 0.3s ease, transform 0.2s ease;
-    }
-    .calendar div:hover {
-      background-color: #9c27b0;
-      color: white;
-      transform: scale(1.1);
-    }
-    .calendar div.selected {
-      background-color: #6a1b9a;
-      color: white;
-      border: 2px solid #fff;
-      font-weight: bold;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar & To-Do List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom right, #6a1b9a, #9c27b0);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
 
-    /* Event Section Styles */
-    .event-list {
-      margin-top: 20px;
-    }
-    .event-item {
-      background-color: #e1bee7;
-      padding: 10px;
-      margin: 8px 0;
-      border-radius: 5px;
-      display: flex;
-      justify-content: space-between;
-    }
-    .event-item button {
-      background-color: #ff1744;
-      color: white;
-      border: none;
-      cursor: pointer;
-      border-radius: 5px;
-      padding: 5px 10px;
-    }
-    .event-item button:hover {
-      background-color: #f44336;
-    }
+        .navbar {
+            width: 100%;
+            background-color: #6a1b9a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
 
-    .button {
-      background-color: #6a1b9a;
-      color: white;
-      padding: 10px 20px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    .button:hover {
-      background-color: #9c27b0;
-    }
-    .input {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 10px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-    /* Navigation buttons */
-    .nav-buttons {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 1rem;
-    }
-    .nav-button {
-      font-size: 30px;
-      cursor: pointer;
-    }
-    /* To-Do List Styles */
-    .todo-list {
-      list-style-type: none;
-      padding: 0;
-    }
-    .todo-item {
-      background-color: #e1bee7;
-      padding: 10px;
-      margin: 8px 0;
-      border-radius: 5px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .todo-item input[type="checkbox"] {
-      margin-right: 10px;
-    }
-    .todo-item button {
-      background-color: #ff1744;
-      color: white;
-      border: none;
-      cursor: pointer;
-      border-radius: 5px;
-      padding: 5px 10px;
-    }
-    .todo-item button:hover {
-      background-color: #f44336;
-    }
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+        }
 
-    /* Styling for displaying selected date */
-    .selected-date {
-      margin-top: 20px;
-      padding: 10px;
-      background-color: #6a1b9a;
-      border-radius: 5px;
-      color: white;
-      text-align: center;
-    }
-  </style>
+        .nav-button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background-color: #9c27b0;
+        }
+
+        .nav-button.active {
+            background-color: #4a148c;
+            font-weight: bold;
+        }
+
+        .nav-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .action-button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .action-button:hover {
+            background-color: #9c27b0;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            width: 80%;
+            max-width: 1200px;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background-color: #7851a9;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+        }
+
+        .card h2 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 1rem;
+        }
+
+        /* Calendar Styles */
+        .calendar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 8px;
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .calendar div {
+            padding: 15px;
+            background-color: #e1bee7;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .calendar div:hover {
+            background-color: #9c27b0;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .calendar div.selected {
+            background-color: #6a1b9a;
+            color: white;
+            border: 2px solid #fff;
+            font-weight: bold;
+        }
+
+        /* Event Section Styles */
+        .event-list {
+            margin-top: 20px;
+        }
+
+        .event-item {
+            background-color: #e1bee7;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .event-item button {
+            background-color: #ff1744;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            padding: 5px 10px;
+        }
+
+        .event-item button:hover {
+            background-color: #f44336;
+        }
+
+        .button {
+            background-color: #6a1b9a;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            background-color: #9c27b0;
+        }
+
+        .input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        /* Navigation buttons */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .nav-button {
+            font-size: 30px;
+            cursor: pointer;
+        }
+
+        /* To-Do List Styles */
+        .todo-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .todo-item {
+            background-color: #e1bee7;
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .todo-item input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        .todo-item button {
+            background-color: #ff1744;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            padding: 5px 10px;
+        }
+
+        .todo-item button:hover {
+            background-color: #f44336;
+        }
+
+        /* Styling for displaying selected date */
+        .selected-date {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #6a1b9a;
+            border-radius: 5px;
+            color: white;
+            text-align: center;
+        }
+    </style>
 </head>
+
 <body>
-  <div class="navbar">
+    <div class="navbar">
         <div class="nav-links">
-            <button class="nav-button active">
-                <a href="index.html" class="text-decoration-home">Home</a>
-            </button>
-           
-                <a href="about.html" class="text-decoration-about"> <button class="nav-button">About</button></a>
-                <a href="cumparaturi.html" class="text-decoration-about"> <button class="nav-button">Cumpărături</button></a>
-                <a href="calendar.html" class="text-decoration-about"> <button class="nav-button">Calendar</button></a>
-                <a href="jobs.html" class="text-decoration-about"> <button class="nav-button">Jobs & All</button></a>
             
+            <a href="index.html" class="text-decoration-about"> <button class="nav-button">Home</button></a>
+            <a href="about.html" class="text-decoration-about"> <button class="nav-button">About</button></a>
+            <a href="cumparaturi.html" class="text-decoration-about"> <button class="nav-button">Cumpărături</button></a>
+            <a href="calendar.html" class="text-decoration-about"> <button class="nav-button">Calendar</button></a>
+            <a href="jobs.html" class="text-decoration-about"> <button class="nav-button">Jobs & All</button></a>
         </div>
         <div class="nav-actions">
-            <button class="action-button">
-                <a href="login.html" class="text-decoration-login">Log-In</a>
-            </button>
-            <button class="action-button">
-                    <a href="signin.html" class="text-decoration-signin">Sign-In</a>
-            </button>
+                      <a href="login.html" class="text-decoration-about"> <button class="nav-button">Login</button></a>
+                      <a href="signin.html" class="text-decoration-about"> <button class="nav-button">Sign-In</button></a>
         </div>
-    </div>  
-  <div class="container">
-    <!-- Calendar Section -->
-    <div class="card">
-      <h2>Calendar</h2>
-      <div class="nav-buttons">
-        <span id="prev-month" class="nav-button">&#60;</span>
-        <h3 id="month-year"></h3> <!-- This will display the month and year -->
-        <span id="next-month" class="nav-button">&#62;</span>
-      </div>
-      <div id="calendar" class="calendar"></div>
-      <div id="selected-date" class="selected-date">Select a date</div>
-      <input id="event-input" class="input" type="text" placeholder="Add an event" />
-      <button id="add-event-btn" class="button">Add Event</button>
-      <div id="event-list" class="event-list"></div>
     </div>
 
-    <!-- To-Do Section -->
-    <div class="card">
-      <h2>To-Do List</h2>
-      <input id="task-input" class="input" type="text" placeholder="Add a new task" />
-      <button id="add-task-btn" class="button">Add Task</button>
-      <ul id="todo-list" class="todo-list"></ul>
+    <div class="container">
+        <!-- Calendar Section -->
+        <div class="card">
+            <h2>Calendar</h2>
+            <div class="nav-buttons">
+                <span id="prev-month" class="nav-button">&#60;</span>
+                <h3 id="month-year"></h3> <!-- This will display the month and year -->
+                <span id="next-month" class="nav-button">&#62;</span>
+            </div>
+            <div id="calendar" class="calendar"></div>
+            <div id="selected-date" class="selected-date">Select a date</div>
+            <input id="event-input" class="input" type="text" placeholder="Add an event" />
+            <button id="add-event-btn" class="button">Add Event</button>
+            <div id="event-list" class="event-list"></div>
+        </div>
+
+        <!-- To-Do Section -->
+        <div class="card">
+            <h2>To-Do List</h2>
+            <input id="task-input" class="input" type="text" placeholder="Add a new task" />
+            <button id="add-task-btn" class="button">Add Task</button>
+            <ul id="todo-list" class="todo-list"></ul>
+        </div>
     </div>
-  </div>
 
-  <script>
-    // Calendar logic
-    const monthYearDisplay = document.getElementById('month-year');
-    const daysInMonthDisplay = document.getElementById('calendar');
-    const selectedDateDisplay = document.getElementById('selected-date');
-    const eventInput = document.getElementById('event-input');
-    const addEventBtn = document.getElementById('add-event-btn');
-    const eventList = document.getElementById('event-list');
-    const prevMonthBtn = document.getElementById('prev-month');
-    const nextMonthBtn = document.getElementById('next-month');
-    let selectedDate = null;
-    let currentMonth = new Date().getMonth(); // Current month (0 - 11)
-    let currentYear = new Date().getFullYear(); // Current year
-    let events = []; // Array to store events by date
+    <script>
+        // Calendar logic
+        const monthYearDisplay = document.getElementById('month-year');
+        const daysInMonthDisplay = document.getElementById('calendar');
+        const selectedDateDisplay = document.getElementById('selected-date');
+        const eventInput = document.getElementById('event-input');
+        const addEventBtn = document.getElementById('add-event-btn');
+        const eventList = document.getElementById('event-list');
+        const prevMonthBtn = document.getElementById('prev-month');
+        const nextMonthBtn = document.getElementById('next-month');
+        let selectedDate = null;
+        let currentMonth = new Date().getMonth(); // Current month (0 - 11)
+        let currentYear = new Date().getFullYear(); // Current year
+        let events = []; // Array to store events by date
 
-    // Function to display the current month and year
-    function displayMonthYear() {
-      const date = new Date(currentYear, currentMonth);
-      const month = date.toLocaleString('default', { month: 'long' });
-      const year = date.getFullYear();
-      monthYearDisplay.innerText = `${month} ${year}`;
-    }
+        // Function to display the current month and year
+        function displayMonthYear() {
+            const date = new Date(currentYear, currentMonth);
+            const month = date.toLocaleString('default', {
+                month: 'long'
+            });
+            const year = date.getFullYear();
+            monthYearDisplay.innerText = `${month} ${year}`;
+        }
 
-    // Generate calendar days
-    function generateCalendar() {
-      daysInMonthDisplay.innerHTML = ''; // Clear previous calendar days
-      const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-      const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+        // Generate calendar days
+        function generateCalendar() {
+            daysInMonthDisplay.innerHTML = ''; // Clear previous calendar days
+            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+            const firstDay = new Date(currentYear, currentMonth, 1).getDay();
 
-      // Empty days before the first day of the month
-      for (let i = 0; i < firstDay; i++) {
-        const emptyDay = document.createElement('div');
-        daysInMonthDisplay.appendChild(emptyDay);
-      }
+            // Empty days before the first day of the month
+            for (let i = 0; i < firstDay; i++) {
+                const emptyDay = document.createElement('div');
+                daysInMonthDisplay.appendChild(emptyDay);
+            }
 
-      // Actual calendar days
-      for (let i = 1; i <= daysInMonth; i++) {
-        const day = document.createElement('div');
-        day.innerText = i;
-        day.addEventListener('click', () => selectDate(i));
-        daysInMonthDisplay.appendChild(day);
-      }
-    }
+            // Actual calendar days
+            for (let i = 1; i <= daysInMonth; i++) {
+                const day = document.createElement('div');
+                day.innerText = i;
+                day.addEventListener('click', () => selectDate(i));
+                daysInMonthDisplay.appendChild(day);
+            }
+        }
 
-    // Handle date selection
-    function selectDate(day) {
-      selectedDate = day;
-      const days = document.querySelectorAll('.calendar div');
-      days.forEach(d => d.classList.remove('selected'));
-      days[day + new Date(currentYear, currentMonth, 1).getDay() - 1].classList.add('selected');
-      displaySelectedDate();
-      displayEvents();
-    }
+        // Handle date selection
+        function selectDate(day) {
+            selectedDate = day;
+            const days = document.querySelectorAll('.calendar div');
+            days.forEach(d => d.classList.remove('selected'));
+            days[day + new Date(currentYear, currentMonth, 1).getDay() - 1].classList.add('selected');
+            displaySelectedDate();
+            displayEvents();
+        }
 
-    // Display the selected date
-    function displaySelectedDate() {
-      const date = new Date(currentYear, currentMonth, selectedDate);
-      const month = date.toLocaleString('default', { month: 'long' });
-      selectedDateDisplay.innerText = `${month} ${selectedDate}, ${currentYear}`;
-    }
+        // Display the selected date
+        function displaySelectedDate() {
+            const date = new Date(currentYear, currentMonth, selectedDate);
+            const month = date.toLocaleString('default', {
+                month: 'long'
+            });
+            selectedDateDisplay.innerText = `${month} ${selectedDate}, ${currentYear}`;
+        }
 
-    // Add event for selected day
-    addEventBtn.addEventListener('click', () => {
-      if (eventInput.value.trim() && selectedDate) {
-        events.push({ date: selectedDate, text: eventInput.value.trim() });
-        eventInput.value = ''; // Clear input after adding
-        displayEvents(); // Update the event list for the selected day
-      }
-    });
+        // Add event for selected day
+        addEventBtn.addEventListener('click', () => {
+            if (eventInput.value.trim() && selectedDate) {
+                events.push({
+                    date: selectedDate,
+                    text: eventInput.value.trim()
+                });
+                eventInput.value = ''; // Clear input after adding
+                displayEvents(); // Update the event list for the selected day
+            }
+        });
 
-    // Display events for the selected date
-    function displayEvents() {
-      eventList.innerHTML = ''; // Clear current event list
-      const selectedEvents = events.filter(event => event.date === selectedDate);
-      selectedEvents.forEach((event, index) => {
-        const eventItem = document.createElement('div');
-        eventItem.classList.add('event-item');
-        eventItem.innerHTML = `
+        // Display events for the selected date
+        function displayEvents() {
+            eventList.innerHTML = ''; // Clear current event list
+            const selectedEvents = events.filter(event => event.date === selectedDate);
+            selectedEvents.forEach((event, index) => {
+                const eventItem = document.createElement('div');
+                eventItem.classList.add('event-item');
+                eventItem.innerHTML = `
           ${event.text}
           <button onclick="deleteEvent(${index})">Delete</button>
         `;
-        eventList.appendChild(eventItem);
-      });
-    }
+                eventList.appendChild(eventItem);
+            });
+        }
 
-    // Delete individual event
-    function deleteEvent(index) {
-      events.splice(index, 1);
-      displayEvents(); // Update the event list after deletion
-    }
+        // Delete individual event
+        function deleteEvent(index) {
+            events.splice(index, 1);
+            displayEvents(); // Update the event list after deletion
+        }
 
-    // Navigate to previous month
-    prevMonthBtn.addEventListener('click', () => {
-      currentMonth -= 1;
-      if (currentMonth < 0) {
-        currentMonth = 11;
-        currentYear -= 1;
-      }
-      displayMonthYear();
-      generateCalendar();
-    });
+   // Navigate to previous month
+        prevMonthBtn.addEventListener('click', () => {
+            currentMonth -= 1;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear -= 1;
+            }
+            displayMonthYear();
+            generateCalendar();
+        });
 
-    // Navigate to next month
-    nextMonthBtn.addEventListener('click', () => {
-      currentMonth += 1;
-      if (currentMonth > 11) {
-        currentMonth = 0;
-        currentYear += 1;
-      }
-      displayMonthYear();
-      generateCalendar();
-    });
+        // Navigate to next month
+        nextMonthBtn.addEventListener('click', () => {
+            currentMonth += 1;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear += 1;
+            }
+            displayMonthYear();
+            generateCalendar();
+        });
 
-    // To-Do List logic
-    const taskInput = document.getElementById('task-input');
-    const addTaskBtn = document.getElementById('add-task-btn');
-    const todoList = document.getElementById('todo-list');
-    let tasks = []; // Array to store to-do tasks
+        // To-Do List logic
+        const taskInput = document.getElementById('task-input');
+        const addTaskBtn = document.getElementById('add-task-btn');
+        const todoList = document.getElementById('todo-list');
+        let tasks = []; // Array to store to-do tasks
 
-    // Add task to the list
-    addTaskBtn.addEventListener('click', () => {
-      if (taskInput.value.trim()) {
-        const task = { text: taskInput.value.trim(), completed: false };
-        tasks.push(task);
-        taskInput.value = ''; // Clear input after adding
-        displayTasks(); // Update the to-do list
-      }
-    });
+        // Add task to the list
+        addTaskBtn.addEventListener('click', () => {
+            if (taskInput.value.trim()) {
+                const task = {
+                    text: taskInput.value.trim(),
+                    completed: false
+                };
+                tasks.push(task);
+                taskInput.value = ''; // Clear input after adding
+                displayTasks(); // Update the to-do list
+            }
+        });
 
-    // Display tasks
-    function displayTasks() {
-      todoList.innerHTML = ''; // Clear current task list
-      tasks.forEach((task, index) => {
-        const taskItem = document.createElement('li');
-        taskItem.classList.add('todo-item');
-        taskItem.innerHTML = `
+        // Display tasks
+        function displayTasks() {
+            todoList.innerHTML = ''; // Clear current task list
+            tasks.forEach((task, index) => {
+                const taskItem = document.createElement('li');
+                taskItem.classList.add('todo-item');
+                taskItem.innerHTML = `
           <input type="checkbox" ${task.completed ? 'checked' : ''} onclick="toggleTask(${index})">
           ${task.text}
           <button onclick="deleteTask(${index})">Delete</button>
         `;
-        todoList.appendChild(taskItem);
-      });
-    }
+                todoList.appendChild(taskItem);
+            });
+        }
 
-    // Toggle task completion
-    function toggleTask(index) {
-      tasks[index].completed = !tasks[index].completed;
-      displayTasks();
-    }
+        // Toggle task completion
+        function toggleTask(index) {
+            tasks[index].completed = !tasks[index].completed;
+            displayTasks();
+        }
 
-    // Delete task
-    function deleteTask(index) {
-      tasks.splice(index, 1);
-      displayTasks();
-    }
+        // Delete task
+        function deleteTask(index) {
+            tasks.splice(index, 1);
+            displayTasks();
+        }
 
-    // Initializing
-    displayMonthYear();
-    generateCalendar();
-    displayTasks();
-  </script>
+        // Initializing
+        displayMonthYear();
+        generateCalendar();
+        displayTasks();
+    </script>
 </body>
+
 </html>
