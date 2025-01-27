@@ -61,14 +61,6 @@
       font-weight: bold;
     }
 
-    /* Days of the week header */
-    .calendar .weekdays {
-      font-weight: bold;
-      background-color: #9c27b0;
-      color: white;
-      border-radius: 5px;
-    }
-
     /* Event Section Styles */
     .event-list {
       margin-top: 20px;
@@ -167,20 +159,10 @@
       <h2>Calendar</h2>
       <div class="nav-buttons">
         <span id="prev-month" class="nav-button">&#60;</span>
-        <h3 id="month-year"></h3>
+        <h3 id="month-year"></h3> <!-- This will display the month and year -->
         <span id="next-month" class="nav-button">&#62;</span>
       </div>
-      <div id="calendar" class="calendar">
-        <div class="weekdays">
-          <div>Sun</div>
-          <div>Mon</div>
-          <div>Tue</div>
-          <div>Wed</div>
-          <div>Thu</div>
-          <div>Fri</div>
-          <div>Sat</div>
-        </div>
-      </div>
+      <div id="calendar" class="calendar"></div>
       <div id="selected-date" class="selected-date">Select a date</div>
       <input id="event-input" class="input" type="text" placeholder="Add an event" />
       <button id="add-event-btn" class="button">Add Event</button>
@@ -274,7 +256,6 @@
         const eventItem = document.createElement('div');
         eventItem.classList.add('event-item');
         eventItem.innerHTML = `
-
           ${event.text}
           <button onclick="deleteEvent(${index})">Delete</button>
         `;
@@ -288,23 +269,23 @@
       displayEvents(); // Update the event list after deletion
     }
 
-    // Navigate to next month
-    nextMonthBtn.addEventListener('click', () => {
-      currentMonth += 1;
-      if (currentMonth > 11) {
-        currentMonth = 0;
-        currentYear += 1;
-      }
-      displayMonthYear();
-      generateCalendar();
-    });
-
     // Navigate to previous month
     prevMonthBtn.addEventListener('click', () => {
       currentMonth -= 1;
       if (currentMonth < 0) {
         currentMonth = 11;
         currentYear -= 1;
+      }
+      displayMonthYear();
+      generateCalendar();
+    });
+
+    // Navigate to next month
+    nextMonthBtn.addEventListener('click', () => {
+      currentMonth += 1;
+      if (currentMonth > 11) {
+        currentMonth = 0;
+        currentYear += 1;
       }
       displayMonthYear();
       generateCalendar();
