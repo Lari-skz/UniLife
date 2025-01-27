@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ro"> <!-- Changed language code to Romanian -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon_uni.png">
-    <title>Cumparaturi-UniLife</title>
+    <title>Cumpărături - UniLife</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon_uni.png">
     <link rel="stylesheet" href="stylecumparaturi.css">
 </head>
 <body>
@@ -29,16 +29,94 @@
         </div>
     </div>
 
-     <!-- Content Section -->
-     
-      <div class="content">
-          
-          <img src="button1.png" alt="Button Image" class="buttons" style="width: 100px; height: 100px;">
-            <h1 class="page-title">Cumpărături</h1>
-            <input type="text" class="search-input" placeholder="Caută produsul dorit">
-            <button class="search-button">
-                <img src="search-icon.png" alt="Search Icon"style="width: 22px; height: 22px;">
-            </button>
+    <!-- Content Section -->
+    <div class="content">
+        <img src="button1.png" alt="Button Image" class="buttons">
+        <h1 class="page-title">Cumpărături</h1>
+        
+        <!-- Search Bar -->
+        <input type="text" class="search-input" placeholder="Caută produsul dorit">
+        <button class="search-button" onclick="performSearch()">
+            <img src="search-icon.png" alt="Search Icon" style="width: 22px; height: 22px;">
+        </button>
+
+        <!-- Map Container -->
+        <div id="map"></div>
     </div>
+
+    <!-- Scripts -->
+    <!-- Include the Google Maps JavaScript API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC5gn1Q6DT7A3BzkVBzescv3CPOtNlwCQs&libraries=places"></script>
+    
+    <!-- Your JavaScript Code -->
+    <script>
+        // Initialize variables
+        let map;
+        let markers = [];
+
+        // Function to initialize the map
+        function initMap() {
+            const sibiu = { lat: 45.793, lng: 24.151 }; // Coordinates for Sibiu
+            map = new google.maps.Map(document.getElementById('map'), {
+                center: sibiu,
+                zoom: 13,
+            });
+        }
+
+        // Function to perform the search
+        function performSearch() {
+            const query = document.querySelector('.search-input').value;
+            if (!query) {
+                alert('Te rog introdu un produs pentru căutare.');
+                return;
+            }
+
+            const request = {
+                location: map.getCenter(),
+                radius: '5000', // 5 km radius
+                query: query,
+            };
+
+            const service = new google.maps.places.PlacesService(map);
+            service.textSearch(request, function(results, status) {
+                if (status === google.maps.places.PlacesServiceStatus.OK) {
+                    clearMarkers();
+                    for (let i = 0; i < results.length; i++) {
+                        createMarker(results[i]);
+                    }
+                    map.setCenter(results[0].geometry.location);
+                } else {
+                    alert('Nu s-au găsit rezultate.');
+                }
+            });
+        }
+
+        // Function to create a marker for each place
+        function createMarker(place) {
+            const marker = new google.maps.Marker({
+                map: map,
+                position: place.geometry.location,
+            });
+            markers.push(marker);
+
+            google.maps.event.addListener(marker, 'click', function() {
+                const infowindow = new google.maps.InfoWindow({
+                    content: `<strong>${place.name}</strong><br>${place.formatted_address}`,
+                });
+                infowindow.open(map, this);
+            });
+        }
+
+        // Function to clear all markers from the map
+        function clearMarkers() {
+            for (let i = 0; i < markers.length; i++) {
+                markers[i].setMap(null);
+            }
+            markers = [];
+        }
+
+        // Initialize the map when the window loads
+        window.onload = initMap;
+    </script>
 </body>
 </html>
