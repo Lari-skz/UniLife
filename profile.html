@@ -3,9 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon_uni.png">
     <title>Profile - UniLife</title>
-    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="styleprofile.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 </head>
@@ -60,11 +58,10 @@
                         </form>
 
                         <!-- Change Password Form -->
-<form id="change-password-form">
-    <input type="hidden" name="email" id="profile-email-hidden">
-    <button type="submit" class="btn-custom">Send Reset Password Email</button>
-</form>
-
+                        <form id="change-password-form" action="/send-reset-password-email" method="post">
+                            <input type="hidden" name="email" id="profile-email-hidden">
+                            <button type="submit" class="btn-custom">Send Reset Password Email</button>
+                        </form>
                     </div>
                     <div class="profile-details">
                         <p><strong>Username:</strong> <span id="profile-username"></span></p>
@@ -77,68 +74,47 @@
     </div>
 
     <!-- Script -->
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const username = sessionStorage.getItem('username');
-        const email = sessionStorage.getItem('email');
-        const city = sessionStorage.getItem('city');
-        const profileImage = sessionStorage.getItem('profileImage');
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const username = sessionStorage.getItem('username');
+            const email = sessionStorage.getItem('email');
+            const city = sessionStorage.getItem('city');
+            const profileImage = sessionStorage.getItem('profileImage');
 
-        if (username) {
-            document.getElementById('profile-username').textContent = username;
-            document.getElementById('profile-email').textContent = email;
-            document.getElementById('profile-city').textContent = city;
-            document.getElementById('username').textContent = username;
-            document.getElementById('profile-email-hidden').value = email;
-        }
+            if (username) {
+                document.getElementById('profile-username').textContent = username;
+                document.getElementById('profile-email').textContent = email;
+                document.getElementById('profile-city').textContent = city;
+                document.getElementById('username').textContent = username;
+                document.getElementById('hidden-username').value = username; // Stochează username-ul pentru încărcare imagine
+                document.getElementById('profile-email-hidden').value = email;
+            }
 
-        if (profileImage) {
-            document.getElementById('profile-image').src = profileImage;
-        }
+            if (profileImage) {
+                document.getElementById('profile-image').src = profileImage;
+            }
 
-        const fileInput = document.getElementById('file-input');
-        const uploadButton = document.getElementById('upload-button');
+            const fileInput = document.getElementById('file-input');
+            const uploadButton = document.getElementById('upload-button');
 
-        fileInput.addEventListener('change', () => {
-            uploadButton.style.display = 'block';
-            document.getElementById('upload-form').submit();
-        });
-
-        const logoutButton = document.getElementById('logout-button');
-        logoutButton.addEventListener('click', () => {
-            sessionStorage.clear();
-            window.location.href = 'login.html';
-        });
-
-        const changePasswordButton = document.getElementById('change-password-button');
-        changePasswordButton.addEventListener('click', () => {
-            document.getElementById('change-password-form').style.display = 'block';
-        });
-
-        // Funcția pentru trimiterea emailului de resetare a parolei
-        const changePasswordForm = document.getElementById('change-password-form');
-        changePasswordForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const emailHidden = document.getElementById('profile-email-hidden').value;
-
-            const response = await fetch('/send-reset-password-email', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ email: emailHidden })
+            fileInput.addEventListener('change', () => {
+                uploadButton.style.display = 'block';
             });
 
-            if (response.ok) {
-                alert('Reset password email sent successfully!');
-            } else {
-                alert('Error sending reset password email');
-            }
-        });
-    });
-</script>
+            // Funcția pentru Logout
+            const logoutButton = document.getElementById('logout-button');
+            logoutButton.addEventListener('click', () => {
+                sessionStorage.clear();
+                window.location.href = 'login.html'; // Redirecționează către pagina de login
+            });
 
+            // Funcția pentru Change Password
+            const changePasswordButton = document.getElementById('change-password-button');
+            changePasswordButton.addEventListener('click', () => {
+                document.getElementById('change-password-form').style.display = 'block';
+            });
+        });
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
 </html>
