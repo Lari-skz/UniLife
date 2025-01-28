@@ -65,7 +65,7 @@
     <script>
         let map;
         let markers = [];
-        let userLocation = { lat: 45.793, lng: 24.151 }; // Default coordinates (will be overridden by user location)
+        let userLocation = { lat: 45.793, lng: 24.151 }; // Default coordinates
 
         // Function to initialize the map
         function initMap() {
@@ -73,6 +73,8 @@
                 center: userLocation,
                 zoom: 13,
             });
+            // Call detectLocation after map initialization
+            detectLocation();
         }
 
         // Function to detect user location
@@ -84,7 +86,11 @@
                         lng: position.coords.longitude,
                     };
                     map.setCenter(userLocation);
-                    createUserMarker({ geometry: { location: userLocation }, name: 'Your Location', formatted_address: '' });
+                    createUserMarker({
+                        geometry: { location: userLocation },
+                        name: 'Locația ta',
+                        formatted_address: '',
+                    });
                 });
             } else {
                 alert('Geolocation is not supported by this browser.');
@@ -94,7 +100,7 @@
         // Function to perform the search
         function performSearch() {
             const query = document.querySelector('.search-input').value;
-            const radius = document.querySelector('#distance').value;
+            const radius = parseInt(document.querySelector('#distance').value);
             if (!query) {
                 alert('Te rog introdu un produs pentru căutare.');
                 return;
@@ -103,19 +109,25 @@
             const request = {
                 location: userLocation,
                 radius: radius, // Use selected radius
-                query: query,
+                keyword: query, // Use keyword for nearbySearch
+                // You can also specify types if needed, e.g., types: ['store'],
             };
 
             const service = new google.maps.places.PlacesService(map);
-            service.textSearch(request, function(results, status) {
+            service.nearbySearch(request, function(results, status) {
                 if (status === google.maps.places.PlacesServiceStatus.OK) {
                     clearMarkers();
                     for (let i = 0; i < results.length; i++) {
                         createMarker(results[i]);
                     }
-                    map.setCenter(results[0].geometry.location);
+                    if (results.length > 0) {
+                        map.setCenter(results[0].geometry.location);
+                    } else {
+                        map.setCenter(userLocation);
+                        alert('Nu s-au găsit rezultate în raza selectată.');
+                    }
                 } else {
-                    alert('Nu s-au găsit rezultate.');
+                    alert('Eroare la căutare: ' + status);
                 }
             });
         }
@@ -130,7 +142,7 @@
 
             google.maps.event.addListener(marker, 'click', function() {
                 const infowindow = new google.maps.InfoWindow({
-                    content: `<strong>${place.name}</strong><br>${place.formatted_address}`,
+                    content: `<strong>${place.name}</strong><br>${place.vicinity || place.formatted_address}`,
                 });
                 infowindow.open(map, this);
             });
@@ -142,8 +154,8 @@
                 map: map,
                 position: place.geometry.location,
                 icon: {
-                    url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png" // Custom marker icon for user location
-                }
+                    url: "http://maps.google.com/mapfiles/ms/icons/blue-dot.png", // Custom marker icon for user location
+                },
             });
             markers.push(marker);
 
