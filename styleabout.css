@@ -170,3 +170,21 @@ body {
 
 }
 
+
+/* Profile Button Style */
+#profile-button {
+    background-color: #4a00e0;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border-radius: 5px;
+    border: none;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#profile-button:hover {
+    background-color: #8e2de2;
+    transform: scale(1.05);
+}
+
