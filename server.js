@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 const multer = require('multer');
 const bcrypt = require('bcrypt');
 const path = require('path');
+const nodemailer = require('nodemailer');
+const crypto = require('crypto');
 
 const app = express();
 
@@ -35,6 +37,15 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage });
 
+// Nodemailer setup
+const transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+        user: 'unilifeinfo3@gmail.com',
+        pass: 'xgqb edeq vaqt jmbm'
+    }
+});
+
 // User Schema
 const UserSchema = new mongoose.Schema({
     username: String,
@@ -42,10 +53,33 @@ const UserSchema = new mongoose.Schema({
     password: String,
     city: String,
     facultate: String,
-    profileImage: String // Adăugare câmp pentru URL-ul imaginii
+    profileImage: String, // Adăugare câmp pentru URL-ul imaginii
+    resetPasswordToken: String,
+    resetPasswordExpires: Date
 });
 
 const User = mongoose.model('User', UserSchema);
+
+// Event Schema
+const EventSchema = new mongoose.Schema({
+    title: String,
+    start: Date,
+    end: Date,
+    description: String,
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
+});
+
+const Event = mongoose.model('Event', EventSchema);
+
+// Task Schema
+const TaskSchema = new mongoose.Schema({
+    text: String,
+    completed: Boolean,
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
+});
+
+const Task = mongoose.model('Task', TaskSchema);
+
 
 // Signup Route
 app.post('/signup', upload.single('profileImage'), async (req, res) => {
@@ -84,6 +118,7 @@ app.post('/login', async (req, res) => {
                 console.log('Password match');
                 res.status(200).send(`
                     <script>
+                        sessionStorage.setItem('userId', '${user._id}');
                         sessionStorage.setItem('username', '${user.username}');
                         sessionStorage.setItem('email', '${user.email}');
                         sessionStorage.setItem('city', '${user.city}');
@@ -101,6 +136,96 @@ app.post('/login', async (req, res) => {
         }
     } catch (err) {
         console.error('Server error:', err);
+        res.status(500).send('Server error');
+    }
+});
+
+// Send Reset Password Email Route
+app.post('/send-reset-password-email', async (req, res) => {
+    const { email } = req.body;
+
+    try {
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(400).send('No account with that email address exists.');
+        }
+
+        const token = crypto.randomBytes(20).toString('hex');
+        user.resetPasswordToken = token;
+        user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+
+        await user.save();
+
+        const resetURL = `http://${req.headers.host}/reset-password.html?token=${token}`;
+
+        const mailOptions = {
+            from: 'youremail@gmail.com',
+            to: email,
+            subject: 'Password Reset',
+            text: `You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n` +
+                  `Please click on the following link, or paste this into your browser to complete the process:\n\n` +
+                  `${resetURL}\n\n` +
+                  `If you did not request this, please ignore this email and your password will remain unchanged.\n`
+        };
+
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                console.error('Error sending email:', error);
+                return res.json({ success: false, error: error.message });
+            }
+            console.log('Email sent:', info.response);
+            res.json({ success: true });
+        });
+
+    } catch (err) {
+        console.error('Error in email route:', err);
+        res.status(500).send('Server error');
+    }
+});
+
+// Change Password Route
+app.post('/change-password', async (req, res) => {
+    const { token, newPassword } = req.body;
+
+    try {
+        const user = await User.findOne({
+            resetPasswordToken: token,
+            resetPasswordExpires: { $gt: Date.now() }
+        });
+
+        if (!user) {
+            return res.status(400).send('Password reset token is invalid or has expired.');
+        }
+
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+        user.password = hashedPassword;
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpires = undefined;
+
+        await user.save();
+        res.status(200).send('Password changed');
+    } catch (err) {
+        console.error('Error changing password:', err);
+        res.status(500).send('Server error');
+    }
+});
+
+// Save Event Route
+app.post('/save-event', async (req, res) => {
+    const { title, start, end, description, userId } = req.body;
+    
+    try {
+        const newEvent = new Event({
+            title,
+            start,
+            end,
+            description,
+            user: userId
+        });
+        await newEvent.save();
+        res.status(201).send('Event saved');
+    } catch (err) {
+        console.error('Error saving event:', err);
         res.status(500).send('Server error');
     }
 });
@@ -134,6 +259,120 @@ app.use((err, req, res, next) => {
     res.status(500).send('Something went wrong! We are working to fix it.');
 });
 
-// Start server
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+
+// Fetch Events Route
+app.get('/get-events', async (req, res) => {
+    const { userId, date } = req.query;
+    
+    try {
+        const events = await Event.find({
+            user: userId,
+            start: { $lte: new Date(date).setHours(23, 59, 59, 999) },
+            end: { $gte: new Date(date).setHours(0, 0, 0, 0) }
+        });
+        res.status(200).json(events);
+    } catch (err) {
+        console.error('Error fetching events:', err);
+        res.status(500).send('Server error');
+    }
+});
+
+// Fetch All Events Route
+app.get('/get-all-events', async (req, res) => {
+    const { userId, month, year } = req.query;
+    
+    try {
+        const startOfMonth = new Date(year, month - 1, 1);
+        const endOfMonth = new Date(year, month, 0);
+
+        const events = await Event.find({
+            user: userId,
+            start: { $lte: endOfMonth },
+            end: { $gte: startOfMonth }
+        });
+        res.status(200).json(events);
+    } catch (err) {
+        console.error('Error fetching all events:', err);
+        res.status(500).send('Server error');
+    }
+});
+
+// Delete Event Route
+app.delete('/delete-event', async (req, res) => {
+    const { eventId } = req.query;
+    
+    try {
+        await Event.findByIdAndDelete(eventId);
+        res.status(200).send('Event deleted');
+    } catch (err) {
+        console.error('Error deleting event:', err);
+        res.status(500).send('Server error');
+    }
+});
+
+// Save Task Route
+app.post('/save-task', async (req, res) => {
+    const { text, completed, userId } = req.body;
+
+    try {
+        const newTask = new Task({
+            text,
+            completed,
+            user: userId
+        });
+        await newTask.save();
+        res.status(201).send('Task saved');
+    } catch (err) {
+        console.error('Error saving task:', err);
+        res.status(500).send('Server error');
+    }
+});
+
+// Fetch Tasks Route
+app.get('/get-tasks', async (req, res) => {
+    const { userId } = req.query;
+
+    try {
+        const tasks = await Task.find({ user: userId });
+        res.status(200).json(tasks);
+    } catch (err) {
+        console.error('Error fetching tasks:', err);
+        res.status(500).send('Server error');
+    }
+});
+
+// Update Task Route
+app.patch('/update-task', async (req, res) => {
+    const { taskId, completed } = req.body;
+
+    try {
+        await Task.findByIdAndUpdate(taskId, { completed });
+        res.status(200).send('Task updated');
+    } catch (err) {
+        console.error('Error updating task:', err);
+        res.status(500).send('Server error');
+    }
+});
+
+// Delete Task Route
+app.delete('/delete-task', async (req, res) => {
+    const { taskId } = req.query;
+
+    try {
+        await Task.findByIdAndDelete(taskId);
+        res.status(200).send('Task deleted');
+    } catch (err) {
+        console.error('Error deleting task:', err);
+        res.status(500).send('Server error');
+    }
+});
+
+// Error Handling Middleware
+app.use((err, req, res, next) => {
+    console.error('An error occurred:', err.stack);
+    res.status(500).send('Something went wrong! We are working to fix it.');
+});
+
+app.listen(3000, () => {
+    console.log('Server started on port 3000');
+});
