@@ -97,3 +97,74 @@ body {
     margin-right: 10px;
     cursor: pointer;
 }
+
+
+/* Profile Page Styles */
+.profile-container {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.profile-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.profile-image {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 10px;
+}
+
+.profile-details {
+    text-align: left;
+}
+
+.profile-details p {
+    margin: 5px 0;
+}
+
+.btn-custom {
+    background-color: #4a00e0;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    display: inline-block;
+    margin-top: 10px;
+}
+
+.btn-custom:hover {
+    background-color: #8e2de2;
+    transform: scale(1.05);
+}
+
+.sidebar {
+    background-color: #4a00e0;
+    padding: 15px;
+    border-radius: 10px;
+    color: white;
+    margin-bottom: 20px;
+}
+
+.sidebar .nav-link {
+    color: white;
+    padding: 10px;
+    display: block;
+    transition: background-color 0.3s ease;
+}
+
+.sidebar .nav-link:hover {
+    background-color: #8e2de2;
+}
+
+.sidebar .nav-link.active {
+    background-color: #5a00c8;
+    font-weight: bold;
+}
