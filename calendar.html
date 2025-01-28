@@ -251,177 +251,295 @@
         </div>
     </div>
 
-    <script>
-        // Calendar logic
-        const monthYearDisplay = document.getElementById('month-year');
-        const daysInMonthDisplay = document.getElementById('calendar');
-        const selectedDateDisplay = document.getElementById('selected-date');
-        const eventInput = document.getElementById('event-input');
-        const addEventBtn = document.getElementById('add-event-btn');
+<script>
+    // Calendar logic
+    let selectedDate = null;
+    let currentMonth = new Date().getMonth(); // Current month (0 - 11)
+    let currentYear = new Date().getFullYear(); // Current year
+
+    // Function to display the current month and year
+    function displayMonthYear() {
+        const date = new Date(currentYear, currentMonth);
+        const month = date.toLocaleString('default', {
+            month: 'long'
+        });
+        const year = date.getFullYear();
+        document.getElementById('month-year').innerText = `${month} ${year}`;
+    }
+
+    // Generate calendar days
+    function generateCalendar() {
+        const calendar = document.getElementById('calendar');
+        calendar.innerHTML = ''; // Clear previous calendar days
+        const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+        const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+
+        // Empty days before the first day of the month
+        for (let i = 0; i < firstDay; i++) {
+            const emptyDay = document.createElement('div');
+            calendar.appendChild(emptyDay);
+        }
+
+        // Actual calendar days
+        for (let i = 1; i <= daysInMonth; i++) {
+            const day = document.createElement('div');
+            day.innerText = i;
+            day.addEventListener('click', () => selectDate(i));
+            calendar.appendChild(day);
+        }
+        
+        fetchAllEvents(); // Fetch all events to mark days with events
+    }
+
+    // Handle date selection
+    function selectDate(day) {
+        selectedDate = day;
+        const days = document.querySelectorAll('.calendar div');
+        days.forEach(d => d.classList.remove('selected'));
+        days[day + new Date(currentYear, currentMonth, 1).getDay() - 1].classList.add('selected');
+        displaySelectedDate();
+        fetchEvents(); // Fetch events for the selected date
+    }
+
+    // Display the selected date
+    function displaySelectedDate() {
+        const date = new Date(currentYear, currentMonth, selectedDate);
+        const month = date.toLocaleString('default', {
+            month: 'long'
+        });
+        document.getElementById('selected-date').innerText = `${month} ${selectedDate}, ${currentYear}`;
+    }
+
+    // Add event for selected day
+    document.getElementById('add-event-btn').addEventListener('click', function() {
+        const title = document.getElementById('event-input').value;
+        const start = new Date(currentYear, currentMonth, selectedDate);
+        const end = new Date(currentYear, currentMonth, selectedDate);
+        const description = 'Event Description';
+        const userId = sessionStorage.getItem('userId');
+
+        fetch('/save-event', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                title,
+                start,
+                end,
+                description,
+                userId
+            })
+        })
+        .then(response => response.text())
+        .then(data => {
+            alert(data);
+            fetchAllEvents(); // Refresh events after adding a new one
+        })
+        .catch(err => console.error('Error saving event:', err));
+    });
+
+    // Fetch events for the selected date
+    function fetchEvents() {
+        const userId = sessionStorage.getItem('userId');
+        const date = new Date(currentYear, currentMonth, selectedDate).toISOString();
+
+        fetch(`/get-events?userId=${userId}&date=${date}`)
+            .then(response => response.json())
+            .then(events => {
+                displayEvents(events); // Display fetched events
+                markDaysWithEvents(events); // Mark days with events
+            })
+            .catch(err => console.error('Error fetching events:', err));
+    }
+
+    // Fetch all events for the current month
+    function fetchAllEvents() {
+        const userId = sessionStorage.getItem('userId');
+        
+        fetch(`/get-all-events?userId=${userId}&month=${currentMonth + 1}&year=${currentYear}`)
+            .then(response => response.json())
+            .then(events => {
+                markDaysWithEvents(events); // Mark days with events
+            })
+            .catch(err => console.error('Error fetching all events:', err));
+    }
+
+    // Display events for the selected date
+    function displayEvents(events) {
         const eventList = document.getElementById('event-list');
-        const prevMonthBtn = document.getElementById('prev-month');
-        const nextMonthBtn = document.getElementById('next-month');
-        let selectedDate = null;
-        let currentMonth = new Date().getMonth(); // Current month (0 - 11)
-        let currentYear = new Date().getFullYear(); // Current year
-        let events = []; // Array to store events by date
+        eventList.innerHTML = ''; // Clear current event list
 
-        // Function to display the current month and year
-        function displayMonthYear() {
-            const date = new Date(currentYear, currentMonth);
-            const month = date.toLocaleString('default', {
-                month: 'long'
-            });
-            const year = date.getFullYear();
-            monthYearDisplay.innerText = `${month} ${year}`;
-        }
+        events.forEach((event) => {
+            const eventItem = document.createElement('div');
+            eventItem.classList.add('event-item');
+            eventItem.innerHTML = `
+                ${event.title}
+                <button onclick="deleteEvent('${event._id}')">Delete</button>
+            `;
+            eventList.appendChild(eventItem);
+        });
+    }
 
-        // Generate calendar days
-        function generateCalendar() {
-            daysInMonthDisplay.innerHTML = ''; // Clear previous calendar days
-            const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-            const firstDay = new Date(currentYear, currentMonth, 1).getDay();
-
-            // Empty days before the first day of the month
-            for (let i = 0; i < firstDay; i++) {
-                const emptyDay = document.createElement('div');
-                daysInMonthDisplay.appendChild(emptyDay);
-            }
-
-            // Actual calendar days
-            for (let i = 1; i <= daysInMonth; i++) {
-                const day = document.createElement('div');
-                day.innerText = i;
-                day.addEventListener('click', () => selectDate(i));
-                daysInMonthDisplay.appendChild(day);
-            }
-        }
-
-        // Handle date selection
-        function selectDate(day) {
-            selectedDate = day;
-            const days = document.querySelectorAll('.calendar div');
-            days.forEach(d => d.classList.remove('selected'));
-            days[day + new Date(currentYear, currentMonth, 1).getDay() - 1].classList.add('selected');
-            displaySelectedDate();
-            displayEvents();
-        }
-
-        // Display the selected date
-        function displaySelectedDate() {
-            const date = new Date(currentYear, currentMonth, selectedDate);
-            const month = date.toLocaleString('default', {
-                month: 'long'
-            });
-            selectedDateDisplay.innerText = `${month} ${selectedDate}, ${currentYear}`;
-        }
-
-        // Add event for selected day
-        addEventBtn.addEventListener('click', () => {
-            if (eventInput.value.trim() && selectedDate) {
-                events.push({
-                    date: selectedDate,
-                    text: eventInput.value.trim()
-                });
-                eventInput.value = ''; // Clear input after adding
-                displayEvents(); // Update the event list for the selected day
+    // Mark days with events
+    function markDaysWithEvents(events) {
+        const days = document.querySelectorAll('.calendar div');
+        events.forEach((event) => {
+            const eventDate = new Date(event.start).getDate();
+            const dayElement = days[eventDate - 1 + new Date(currentYear, currentMonth, 1).getDay()];
+            if (dayElement) {
+                dayElement.classList.add('has-event');
             }
         });
+    }
 
-        // Display events for the selected date
-        function displayEvents() {
-            eventList.innerHTML = ''; // Clear current event list
-            const selectedEvents = events.filter(event => event.date === selectedDate);
-            selectedEvents.forEach((event, index) => {
-                const eventItem = document.createElement('div');
-                eventItem.classList.add('event-item');
-                eventItem.innerHTML = `
-          ${event.text}
-          <button onclick="deleteEvent(${index})">Delete</button>
-        `;
-                eventList.appendChild(eventItem);
-            });
+    // Delete individual event
+    function deleteEvent(eventId) {
+        fetch(`/delete-event?eventId=${eventId}`, { method: 'DELETE' })
+            .then(response => response.text())
+            .then(data => {
+                alert(data);
+                fetchAllEvents(); // Refresh events after deletion
+            })
+            .catch(err => console.error('Error deleting event:', err));
+    }
+
+    // Navigate to previous month
+    document.getElementById('prev-month').addEventListener('click', () => {
+        currentMonth -= 1;
+        if (currentMonth < 0) {
+            currentMonth = 11;
+            currentYear -= 1;
         }
-
-        // Delete individual event
-        function deleteEvent(index) {
-            events.splice(index, 1);
-            displayEvents(); // Update the event list after deletion
-        }
-
-   // Navigate to previous month
-        prevMonthBtn.addEventListener('click', () => {
-            currentMonth -= 1;
-            if (currentMonth < 0) {
-                currentMonth = 11;
-                currentYear -= 1;
-            }
-            displayMonthYear();
-            generateCalendar();
-        });
-
-        // Navigate to next month
-        nextMonthBtn.addEventListener('click', () => {
-            currentMonth += 1;
-            if (currentMonth > 11) {
-                currentMonth = 0;
-                currentYear += 1;
-            }
-            displayMonthYear();
-            generateCalendar();
-        });
-
-        // To-Do List logic
-        const taskInput = document.getElementById('task-input');
-        const addTaskBtn = document.getElementById('add-task-btn');
-        const todoList = document.getElementById('todo-list');
-        let tasks = []; // Array to store to-do tasks
-
-        // Add task to the list
-        addTaskBtn.addEventListener('click', () => {
-            if (taskInput.value.trim()) {
-                const task = {
-                    text: taskInput.value.trim(),
-                    completed: false
-                };
-                tasks.push(task);
-                taskInput.value = ''; // Clear input after adding
-                displayTasks(); // Update the to-do list
-            }
-        });
-
-        // Display tasks
-        function displayTasks() {
-            todoList.innerHTML = ''; // Clear current task list
-            tasks.forEach((task, index) => {
-                const taskItem = document.createElement('li');
-                taskItem.classList.add('todo-item');
-                taskItem.innerHTML = `
-          <input type="checkbox" ${task.completed ? 'checked' : ''} onclick="toggleTask(${index})">
-          ${task.text}
-          <button onclick="deleteTask(${index})">Delete</button>
-        `;
-                todoList.appendChild(taskItem);
-            });
-        }
-
-        // Toggle task completion
-        function toggleTask(index) {
-            tasks[index].completed = !tasks[index].completed;
-            displayTasks();
-        }
-
-        // Delete task
-        function deleteTask(index) {
-            tasks.splice(index, 1);
-            displayTasks();
-        }
-
-        // Initializing
         displayMonthYear();
         generateCalendar();
-        displayTasks();
-    </script>
+    });
+
+    // Navigate to next month
+    document.getElementById('next-month').addEventListener('click', () => {
+        currentMonth += 1;
+        if (currentMonth > 11) {
+            currentMonth = 0;
+            currentYear += 1;
+        }
+        displayMonthYear();
+        generateCalendar();
+    });
+
+    // To-Do List logic
+    const taskInput = document.getElementById('task-input');
+    const addTaskBtn = document.getElementById('add-task-btn');
+    const todoList = document.getElementById('todo-list');
+
+    // Add task to the list
+    addTaskBtn.addEventListener('click', () => {
+        if (taskInput.value.trim()) {
+            const text = taskInput.value.trim();
+            const completed = false;
+            const userId = sessionStorage.getItem('userId');
+
+            fetch('/save-task', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    text,
+                    completed,
+                    userId
+                })
+            })
+            .then(response => response.text())
+            .then(data => {
+                alert(data);
+                fetchTasks(); // Refresh tasks after adding a new one
+            })
+            .catch(err => console.error('Error saving task:', err));
+        }
+    });
+
+    // Fetch tasks
+    function fetchTasks() {
+        const userId = sessionStorage.getItem('userId');
+
+        fetch(`/get-tasks?userId=${userId}`)
+            .then(response => response.json())
+            .then(tasks => {
+                displayTasks(tasks); // Display fetched tasks
+            })
+            .catch(err => console.error('Error fetching tasks:', err));
+    }
+
+    // Display tasks
+    function displayTasks(tasks) {
+        const todoList = document.getElementById('todo-list');
+        todoList.innerHTML = ''; // Clear current task list
+
+        tasks.forEach((task) => {
+            const taskItem = document.createElement('li');
+            taskItem.classList.add('todo-item');
+            taskItem.innerHTML = `
+                <input type="checkbox" ${task.completed ? 'checked' : ''} onclick="toggleTask('${task._id}', this.checked)">
+                ${task.text}
+                <button onclick="deleteTask('${task._id}')">Delete</button>
+            `;
+            todoList.appendChild(taskItem);
+        });
+    }
+
+    // Toggle task completion
+    function toggleTask(taskId, completed) {
+        fetch('/update-task', {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                taskId,
+                completed
+            })
+        })
+        .then(response => response.text())
+        .then(data => {
+            alert(data);
+            fetchTasks(); // Refresh tasks after updating
+        })
+        .catch(err => console.error('Error updating task:', err));
+    }
+
+    // Delete task
+    function deleteTask(taskId) {
+        fetch(`/delete-task?taskId=${taskId}`, { method: 'DELETE' })
+            .then(response => response.text())
+            .then(data => {
+                alert(data);
+                fetchTasks(); // Refresh tasks after deletion
+            })
+            .catch(err => console.error('Error deleting task:', err));
+    }
+
+    // Initializing
+    displayMonthYear();
+    generateCalendar();
+    fetchTasks(); // Fetch tasks on page load
+
+document.addEventListener('DOMContentLoaded', function() {
+        const username = sessionStorage.getItem('username');
+        if (username) {
+            // Ascundem butoanele de Login/Sign-In
+            document.querySelector('.nav-actions').innerHTML = `
+                <button class="nav-button" id="profile-button">${username}</button>
+            `;
+
+            // Adăugăm eveniment de click pentru butonul de profil
+            document.getElementById('profile-button').addEventListener('click', function() {
+                window.location.href = '/profile.html';
+            });
+        }
+    });
+
+</script>
+
 </body>
 
 </html>
