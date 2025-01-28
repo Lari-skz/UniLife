@@ -7,8 +7,6 @@
     <title>Sign-In - UniLife</title>
     <link rel="stylesheet" href="stylesignin.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-
-        
 </head>
 <body>
     <!-- Navigation Bar -->
@@ -37,55 +35,42 @@
         <div class="gradient-box text-center text-white" style="width: 400px;">
             <h2 class="fw-bold mb-4">Sign-In</h2>
             <!-- Form -->
-         
-<form action="/signup" method="POST">
-    <input type="text" name="username" class="form-control" placeholder="Username" required>
-    <input type="email" name="email" class="form-control" placeholder="E-mail" required>
-    <input type="password" name="password" class="form-control" placeholder="Password" required>
-    <input type="password" name="confirm_password" class="form-control" placeholder="Confirm Password" required>
-    <select name="city" class="form-control" required style="color:rgb(89, 92, 95);" onchange="this.style.color = 'black';">
-    <option value="" disabled selected style="color:rgb(89, 92, 95)">City in which you study?</option>
-                        <option value="Sibiu">Alba Iulia</option>
-                        <option value="Brasov">Arad</option>
-                        <option value="Cluj">Bacău</option>
-                        <option value="Mures">Mures</option>
-                        <option value="Baia Mare">Baia Mare</option>
-                        <option value="Brașov">Brașov</option>
-                        <option value="Bucharest">Bucharest</option>
-                        <option value="Mures">Cluj-Napoca</option>
-                        <option value="Constanța">Constanța</option>
-                        <option value="Craiova">Craiova</option>
-                        <option value="Deva">Deva</option>
-                        <option value="Galați">Galați</option>
-                        <option value="Iași">Iași</option>
-                        <option value="Lugoj">Lugoj</option>
-                        <option value="Oradea">Oradea</option>
-                        <option value="Pitești">Pitești</option>
-                        <option value="Ploiești">Ploiești</option>
-                        <option value="Roman">Roman</option>
-                        <option value="Satu Mare">Satu Mare</option>
-                        <option value="Sibiu">Sibiu</option>
-                        <option value="Suceava">Suceava</option>
-                        <option value="Târgoviște">Târgoviște</option>
-                        <option value="Târgu Jiu">Târgu Jiu</option>
-                        <option value="Târgu Mureș">Târgu Mureș</option>
-                        <option value="Timișoara">Timișoara</option>
-
-    </select>
-    <input type="text" name="facultate" class="form-control" placeholder="What do you study?" required>
-    <button type="submit" class="btn btn-custom w-50">Create Account</button>
-</form>
-
-
-
-
-
-
-
-
-
-
-
+            <form action="/signup" method="POST">
+                <input type="text" name="username" class="form-control" placeholder="Username" required>
+                <input type="email" name="email" class="form-control" placeholder="E-mail" required>
+                <input type="password" name="password" class="form-control" placeholder="Password" required>
+                <input type="password" name="confirm_password" class="form-control" placeholder="Confirm Password" required>
+                <select name="city" class="form-control" required style="color:rgb(89, 92, 95);" onchange="this.style.color = 'black';">
+                    <option value="" disabled selected style="color:rgb(89, 92, 95)">City in which you study?</option>
+                    <option value="Alba Iulia">Alba Iulia</option>
+                    <option value="Arad">Arad</option>
+                    <option value="Bacău">Bacău</option>
+                    <option value="Mureș">Mureș</option>
+                    <option value="Baia Mare">Baia Mare</option>
+                    <option value="Brașov">Brașov</option>
+                    <option value="Bucharest">Bucharest</option>
+                    <option value="Cluj-Napoca">Cluj-Napoca</option>
+                    <option value="Constanța">Constanța</option>
+                    <option value="Craiova">Craiova</option>
+                    <option value="Deva">Deva</option>
+                    <option value="Galați">Galați</option>
+                    <option value="Iași">Iași</option>
+                    <option value="Lugoj">Lugoj</option>
+                    <option value="Oradea">Oradea</option>
+                    <option value="Pitești">Pitești</option>
+                    <option value="Ploiești">Ploiești</option>
+                    <option value="Roman">Roman</option>
+                    <option value="Satu Mare">Satu Mare</option>
+                    <option value="Sibiu">Sibiu</option>
+                    <option value="Suceava">Suceava</option>
+                    <option value="Târgoviște">Târgoviște</option>
+                    <option value="Târgu Jiu">Târgu Jiu</option>
+                    <option value="Târgu Mureș">Târgu Mureș</option>
+                    <option value="Timișoara">Timișoara</option>
+                </select>
+                <input type="text" name="facultate" class="form-control" placeholder="What you study?" required>
+                <button type="submit" class="btn btn-custom w-50">Create Account</button>
+            </form>
         </div>
     </div>
 
@@ -96,5 +81,8 @@
             <a href="https://instagram.com/unilife_studinfo3" target="_blank" class="fw-bold text-decoration-none text-primary">@unilife_studinfo3</a>
         </p>
     </footer>
+</body>
+</html>
+   
                     
 
