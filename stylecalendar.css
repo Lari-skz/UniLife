@@ -173,3 +173,8 @@
     .event-item button:hover {
         background-color: #f44336;
     }
+
+.calendar div.has-event {
+    background-color: #8e2de2;
+    color: white;
+}
