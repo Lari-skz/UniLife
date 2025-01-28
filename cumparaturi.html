@@ -1,11 +1,30 @@
 <!DOCTYPE html>
-<html lang="ro"> <!-- Changed language code to Romanian -->
+<html lang="ro">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Cumpărături - UniLife</title>
     <link rel="icon" type="image/png" sizes="32x32" href="favicon_uni.png">
     <link rel="stylesheet" href="stylecumparaturi.css">
+    <style>
+        .user-name {
+            font-weight: bold;
+            color: white;
+        }
+        .action-button {
+            margin: 0 10px;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .action-button:hover {
+            background-color: #2980b9;
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation Bar -->
@@ -20,12 +39,7 @@
                 <a href="jobs.html" class="text-decoration-about"> <button class="nav-button">Jobs & All</button></a>
         </div>
         <div class="nav-actions">
-            <button class="action-button">
-                <a href="login.html" class="text-decoration-login">Log-In</a>
-            </button>
-            <button class="action-button">
-                    <a href="singin.html" class="text-decoration-signin">Sign-In</a>
-            </button>
+            <button id="auth-button" class="action-button"></button>
         </div>
     </div>
 
@@ -49,8 +63,6 @@
         <button class="search-button" onclick="performSearch()">
             <img src="search-icon.png" alt="Search Icon" style="width: 22px; height: 22px;">
         </button>
-
-        
 
         <!-- Map Container -->
         <div id="map"></div>
@@ -178,7 +190,27 @@
         // Initialize the map when the window loads
         window.onload = initMap;
 
+        // Script to handle login and profile button
+        document.addEventListener('DOMContentLoaded', () => {
+            const username = sessionStorage.getItem('username');
+            const authButton = document.getElementById('auth-button');
 
+            if (username) {
+                authButton.innerHTML = `<span class="user-name">${username}</span>`;
+                authButton.onclick = () => {
+                    window.location.href = 'profile.html';
+                };
+            } else {
+                authButton.innerHTML = `
+                    <a href="login.html" class="text-decoration-login">Log-In</a>
+                `;
+                const signinButton = document.createElement('button');
+                signinButton.className = 'action-button';
+                signinButton.innerHTML = '<a href="signin.html" class="text-decoration-signin">Sign-In</a>';
+                document.querySelector('.nav-actions').appendChild(signinButton);
+            }
+        });
     </script>
 </body>
 </html>
+
