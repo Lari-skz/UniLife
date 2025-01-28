@@ -89,6 +89,29 @@
 
     <!-- Scripts -->
     <script src="script.js"></script>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const username = sessionStorage.getItem('username');
+        if (username) {
+            // Ascundem butoanele de Login/Sign-In
+            document.querySelector('.nav-actions').innerHTML = `
+                <button class="nav-button" id="profile-button">${username}</button>
+            `;
+
+            // Adăugăm eveniment de click pentru butonul de profil
+            document.getElementById('profile-button').addEventListener('click', function() {
+                window.location.href = '/profile.html';
+            });
+        }
+    });
+</script>
+
+
+
+
 </body>
 </html>
    
+
