@@ -169,13 +169,13 @@ app.post('/send-reset-password-email', async (req, res) => {
         };
 
         transporter.sendMail(mailOptions, (error, info) => {
-            if (error) {
-                console.error('Error sending email:', error);
-                return res.json({ success: false, error: error.message });
-            }
-            console.log('Email sent:', info.response);
-            res.json({ success: true });
-        });
+    if (error) {
+        console.error('Error sending email:', error);
+        return res.json({ success: false, error: error.message });
+    }
+    console.log('Email sent:', info.response);
+    res.json({ success: true });
+});
 
     } catch (err) {
         console.error('Error in email route:', err);
