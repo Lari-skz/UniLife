@@ -14,6 +14,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname)); // Servește fișierele din același director
 app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); // Servește directorul uploads
+app.get('/post-job.html', (req, res) => {
+    res.sendFile(path.join(__dirname, 'post-job.html'));
+});
+
 
 // MongoDB Atlas connection
 const db = process.env.MONGODB_URI || 'mongodb+srv://oviwansan:1234@unilife.hhsrc.mongodb.net/UniLife?retryWrites=true&w=majority&appName=UniLife';
@@ -45,6 +49,50 @@ const transporter = nodemailer.createTransport({
         pass: 'xgqb edeq vaqt jmbm'
     }
 });
+
+
+// Job Schema
+const JobSchema = new mongoose.Schema({
+    description: { type: String, maxlength: 500 },
+    phone: String,
+    email: String,
+    createdAt: { type: Date, default: Date.now }
+});
+
+const Job = mongoose.model('Job', JobSchema);
+
+
+// Post Job Route
+app.post('/post-job', async (req, res) => {
+    const { description, phone, email } = req.body;
+    try {
+        const newJob = new Job({
+            description,
+            phone,
+            email
+        });
+        await newJob.save();
+        res.status(201).send('Job posted');
+    } catch (err) {
+        console.error('Error posting job:', err);
+        res.status(500).send('Server error');
+    }
+});
+
+
+// Get Jobs Route
+app.get('/get-jobs', async (req, res) => {
+    try {
+        const jobs = await Job.find();
+        res.status(200).json(jobs);
+    } catch (err) {
+        console.error('Error fetching jobs:', err);
+        res.status(500).send('Server error');
+    }
+});
+
+
+
 
 // User Schema
 const UserSchema = new mongoose.Schema({
