@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon_uni.png">
+    <title>Postează un Anunț - UniLife</title>
+    <link rel="stylesheet" href="stylejobs.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <div class="navbar">
+        <div class="nav-links">
+            <button class="nav-button">
+                <a href="index.html" class="text-decoration-home">Home</a>
+            </button>
+            <a href="about.html" class="text-decoration-about"> <button class="nav-button">About</button></a>
+            <a href="cumparaturi.html" class="text-decoration-about"> <button class="nav-button">Cumpărături</button></a>
+            <a href="calendar.html" class="text-decoration-about"> <button class="nav-button">Calendar</button></a>
+            <a href="jobs.html" class="text-decoration-about"> <button class="nav-button">Jobs & All</button></a>
+        </div>
+        <div class="nav-actions">
+            <button id="auth-button" class="action-button"></button>
+        </div>
+    </div>
+
+    <!-- Job Posting Form -->
+    <h2>Postează un Anunț de Job</h2>
+    <form id="job-form">
+        <textarea id="job-description" maxlength="500" placeholder="Descrierea jobului (max 500 cuvinte)"></textarea>
+        <input type="text" id="job-phone" placeholder="Număr de telefon" required>
+        <input type="email" id="job-email" placeholder="Adresă de e-mail" required>
+        <button type="submit">Postează</button>
+    </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const username = sessionStorage.getItem('username');
+            const authButton = document.getElementById('auth-button');
+            const jobForm = document.getElementById('job-form');
+
+            if (username) {
+                authButton.innerHTML = `<span class="user-name">${username}</span>`;
+                authButton.onclick = () => {
+                    window.location.href = 'profile.html';
+                };
+            } else {
+                window.location.href = 'login.html'; // Redirecționează către pagina de autentificare dacă nu este autentificat
+            }
+
+            jobForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const jobDescription = document.getElementById('job-description').value;
+                const jobPhone = document.getElementById('job-phone').value;
+                const jobEmail = document.getElementById('job-email').value;
+
+                const job = {
+                    description: jobDescription,
+                    phone: jobPhone,
+                    email: jobEmail
+                };
+
+                try {
+                    await fetch('/post-job', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(job)
+                    });
+                    window.location.href = 'jobs.html'; // Redirecționează către pagina de joburi după postare
+                } catch (err) {
+                    console.error('Error posting job:', err);
+                }
+            });
+        });
+    </script>
+
+    <style>
+        .user-name {
+            font-weight: bold;
+            color: white;
+        }
+        .action-button {
+            margin: 0 10px;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .action-button:hover {
+            background-color: #2980b9;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            max-width: 500px;
+            margin
+        max-width: 500px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            background-color: #f9f9f9;
+        }
+        textarea, input {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</body>
+</html>
