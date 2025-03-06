@@ -24,15 +24,25 @@
         </div>
     </div>
 
+    <!-- Job Listings and Post Job Button -->
+    <h2>Anunțuri de Joburi</h2>
+    <div id="job-listings"></div>
+    <button id="post-job-button" class="action-button">Postează un Anunț</button>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const username = sessionStorage.getItem('username');
             const authButton = document.getElementById('auth-button');
+            const postJobButton = document.getElementById('post-job-button');
+            const jobListings = document.getElementById('job-listings');
 
             if (username) {
                 authButton.innerHTML = `<span class="user-name">${username}</span>`;
                 authButton.onclick = () => {
                     window.location.href = 'profile.html';
+                };
+                postJobButton.onclick = () => {
+                    window.location.href = 'post-job.html'; // Redirecționează către pagina de postare a anunțurilor
                 };
             } else {
                 authButton.innerHTML = `
@@ -42,7 +52,32 @@
                 signinButton.className = 'action-button';
                 signinButton.innerHTML = '<a href="signin.html" class="text-decoration-signin">Sign-In</a>';
                 document.querySelector('.nav-actions').appendChild(signinButton);
+                postJobButton.onclick = () => {
+                    window.location.href = 'login.html'; // Redirecționează către pagina de autentificare
+                };
             }
+
+            async function displayJobs() {
+                try {
+                    const response = await fetch('/get-jobs');
+                    const jobs = await response.json();
+                    jobListings.innerHTML = '';
+                    jobs.forEach((job) => {
+                        const jobItem = document.createElement('div');
+                        jobItem.className = 'job-item';
+                        jobItem.innerHTML = `
+                            <p>${job.description}</p>
+                            <p><strong>Telefon:</strong> ${job.phone}</p>
+                            <p><strong>Email:</strong> ${job.email}</p>
+                        `;
+                        jobListings.appendChild(jobItem);
+                    });
+                } catch (err) {
+                    console.error('Error fetching jobs:', err);
+                }
+            }
+
+            displayJobs();
         });
     </script>
 
@@ -63,6 +98,18 @@
         }
         .action-button:hover {
             background-color: #2980b9;
+        }
+
+        #job-listings {
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        .job-item {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            background-color: #fff;
         }
     </style>
 </body>
